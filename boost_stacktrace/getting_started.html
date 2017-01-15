@@ -2,25 +2,25 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Getting Started</title>
-<link rel="stylesheet" href="http://www.boost.org/doc/libs/1_61_0/doc/src/boostbook.css" type="text/css">
+<link rel="stylesheet" href="http://www.boost.org/doc/libs/1_63_0/doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Boost.Stacktrace 1.0">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Boost.Stacktrace 1.0">
 <link rel="prev" href="../index.html" title="Chapter&#160;1.&#160;Boost.Stacktrace 1.0">
-<link rel="next" href="build_macros_and_backends.html" title="Build, Macros and Backends">
+<link rel="next" href="configuration_and_build.html" title="Configuration and Build">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
-<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="http://www.boost.org/doc/libs/1_61_0/boost.png"></td>
-<td align="center"><a href="http://www.boost.org/doc/libs/1_61_0/index.html">Home</a></td>
-<td align="center"><a href="http://www.boost.org/doc/libs/1_61_0/libs/libraries.htm">Libraries</a></td>
+<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="http://www.boost.org/doc/libs/1_63_0/boost.png"></td>
+<td align="center"><a href="http://www.boost.org/doc/libs/1_63_0/index.html">Home</a></td>
+<td align="center"><a href="http://www.boost.org/doc/libs/1_63_0/libs/libraries.htm">Libraries</a></td>
 <td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
 <td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
-<td align="center"><a href="http://www.boost.org/doc/libs/1_61_0/more/index.htm">More</a></td>
+<td align="center"><a href="http://www.boost.org/doc/libs/1_63_0/more/index.htm">More</a></td>
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="../index.html"><img src="http://www.boost.org/doc/libs/1_61_0/doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="http://www.boost.org/doc/libs/1_61_0/doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="http://www.boost.org/doc/libs/1_61_0/doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="build_macros_and_backends.html"><img src="http://www.boost.org/doc/libs/1_61_0/doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="../index.html"><img src="http://www.boost.org/doc/libs/1_63_0/doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="http://www.boost.org/doc/libs/1_63_0/doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="http://www.boost.org/doc/libs/1_63_0/doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="configuration_and_build.html"><img src="http://www.boost.org/doc/libs/1_63_0/doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
@@ -50,7 +50,7 @@
       to print current call stack</a>
 </h3></div></div></div>
 <p>
-        <code class="computeroutput"><a class="link" href="../boost_stacktrace_header_reference.html#boost.stacktrace.stacktrace">boost::stacktrace::stacktrace</a></code>
+        <code class="computeroutput"><a class="link" href="../reference.html#boost.stacktrace.stacktrace">boost::stacktrace::stacktrace</a></code>
         contains methods for working with call-stack/backtraces/stacktraces. Here's
         a small example:
       </p>
@@ -69,7 +69,7 @@
             stacktraces
           </li>
 <li class="listitem">
-            <code class="computeroutput"><a class="link" href="../boost_stacktrace_header_reference.html#boost.stacktrace.stacktrace">stacktrace()</a></code>
+            <code class="computeroutput"><a class="link" href="../reference.html#boost.stacktrace.stacktrace">stacktrace()</a></code>
             is the default constructor call; constructor stores the current function
             call sequence inside the stacktrace class.
           </li>
@@ -82,7 +82,7 @@
 <span class="number">2</span><span class="special">#</span> <span class="identifier">bar</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="identifier">at</span> <span class="special">/</span><span class="identifier">path</span><span class="special">/</span><span class="identifier">to</span><span class="special">/</span><span class="identifier">source</span><span class="special">/</span><span class="identifier">file</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">70</span>
 <span class="number">3</span><span class="special">#</span> <span class="identifier">bar</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="identifier">at</span> <span class="special">/</span><span class="identifier">path</span><span class="special">/</span><span class="identifier">to</span><span class="special">/</span><span class="identifier">source</span><span class="special">/</span><span class="identifier">file</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">70</span>
 <span class="number">4</span><span class="special">#</span> <span class="identifier">main</span> <span class="identifier">at</span> <span class="special">/</span><span class="identifier">path</span><span class="special">/</span><span class="identifier">to</span><span class="special">/</span><span class="identifier">main</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">93</span>
-<span class="number">5</span><span class="special">#</span> <span class="identifier">__libc_start_main</span>
+<span class="number">5</span><span class="special">#</span> <span class="identifier">__libc_start_main</span> <span class="identifier">in</span> <span class="special">/</span><span class="identifier">lib</span><span class="special">/</span><span class="identifier">x86_64</span><span class="special">-</span><span class="identifier">linux</span><span class="special">-</span><span class="identifier">gnu</span><span class="special">/</span><span class="identifier">libc</span><span class="special">.</span><span class="identifier">so</span><span class="special">.</span><span class="number">6</span>
 <span class="number">6</span><span class="special">#</span> <span class="identifier">_start</span>
 </pre>
 </div>
@@ -103,6 +103,7 @@
       </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">exception</span><span class="special">&gt;</span>    <span class="comment">// std::set_terminate, std::abort</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">signal</span><span class="special">.</span><span class="identifier">h</span><span class="special">&gt;</span>     <span class="comment">// ::signal</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">cstdlib</span><span class="special">&gt;</span>      <span class="comment">// std::_Exit</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">stacktrace</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostream</span><span class="special">&gt;</span>     <span class="comment">// std::cerr</span>
 
@@ -113,11 +114,12 @@
 
 <span class="keyword">void</span> <span class="identifier">my_signal_handler</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">signum</span><span class="special">)</span> <span class="special">{</span>
     <span class="special">::</span><span class="identifier">signal</span><span class="special">(</span><span class="identifier">signum</span><span class="special">,</span> <span class="identifier">SIG_DFL</span><span class="special">);</span>
+    <span class="comment">//boost::stacktrace::this_thread_frames::dump("backtrace_file.txt")</span>
     <span class="identifier">boost</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">::</span><span class="identifier">stacktrace</span> <span class="identifier">bt</span><span class="special">;</span>
     <span class="keyword">if</span> <span class="special">(</span><span class="identifier">bt</span><span class="special">)</span> <span class="special">{</span>
-        <span class="identifier">std</span><span class="special">::</span><span class="identifier">cerr</span> <span class="special">&lt;&lt;</span> <span class="string">"Signal "</span> <span class="special">&lt;&lt;</span> <span class="identifier">signum</span> <span class="special">&lt;&lt;</span> <span class="string">", backtrace:\n"</span> <span class="special">&lt;&lt;</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">()</span> <span class="special">&lt;&lt;</span> <span class="char">'\n'</span><span class="special">;</span> <span class="comment">// <sup>[<a name="boost_stacktrace.getting_started.handle_terminates_aborts_and_seg.f0" href="#ftn.boost_stacktrace.getting_started.handle_terminates_aborts_and_seg.f0" class="footnote">1</a>]</sup></span>
+        <span class="identifier">std</span><span class="special">::</span><span class="identifier">cerr</span> <span class="special">&lt;&lt;</span> <span class="string">"Signal "</span> <span class="special">&lt;&lt;</span> <span class="identifier">signum</span> <span class="special">&lt;&lt;</span> <span class="string">", backtrace:\n"</span> <span class="special">&lt;&lt;</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">()</span> <span class="special">&lt;&lt;</span> <span class="char">'\n'</span><span class="special">;</span> <span class="comment">// This code is not async-signal-safe! Examples will be changed soon</span>
     <span class="special">}</span>
-    <span class="identifier">_Exit</span><span class="special">(-</span><span class="number">1</span><span class="special">);</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">_Exit</span><span class="special">(-</span><span class="number">1</span><span class="special">);</span>
 <span class="special">}</span>
 </pre>
 <p>
@@ -211,20 +213,19 @@
         call our functions <code class="computeroutput"><span class="identifier">assertion_failed</span></code>
         and <code class="computeroutput"><span class="identifier">assertion_failed_msg</span></code>
         in case of failure. In <code class="computeroutput"><span class="identifier">assertion_failed_msg</span></code>
-        we output information that was provided by the assertion macro and <code class="computeroutput"><a class="link" href="../boost_stacktrace_header_reference.html#boost.stacktrace.stacktrace">boost::stacktrace::stacktrace</a></code>:
+        we output information that was provided by the assertion macro and <code class="computeroutput"><a class="link" href="../reference.html#boost.stacktrace.stacktrace">boost::stacktrace::stacktrace</a></code>:
       </p>
 <pre class="programlisting"><span class="identifier">Expression</span> <span class="char">'i &lt; N'</span> <span class="identifier">is</span> <span class="keyword">false</span> <span class="identifier">in</span> <span class="identifier">function</span> <span class="char">'T&amp; boost::array&lt;T, N&gt;::operator[](boost::array&lt;T, N&gt;::size_type) [with T = int; long unsigned int N = 5ul; boost::array&lt;T, N&gt;::reference = int&amp;; boost::array&lt;T, N&gt;::size_type = long unsigned int]'</span><span class="special">:</span> <span class="identifier">out</span> <span class="identifier">of</span> <span class="identifier">range</span><span class="special">.</span>
 <span class="identifier">Backtrace</span><span class="special">:</span>
- <span class="number">0</span><span class="special">#</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">::</span><span class="identifier">detail</span><span class="special">::</span><span class="identifier">backend</span><span class="special">::</span><span class="identifier">backend</span><span class="special">(</span><span class="keyword">void</span><span class="special">**,</span> <span class="keyword">unsigned</span> <span class="keyword">long</span><span class="special">)</span>
- <span class="number">1</span><span class="special">#</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">assertion_failed_msg</span><span class="special">(</span><span class="keyword">char</span> <span class="keyword">const</span><span class="special">*,</span> <span class="keyword">char</span> <span class="keyword">const</span><span class="special">*,</span> <span class="keyword">char</span> <span class="keyword">const</span><span class="special">*,</span> <span class="keyword">char</span> <span class="keyword">const</span><span class="special">*,</span> <span class="keyword">long</span><span class="special">)</span> <span class="identifier">at</span> <span class="identifier">boost</span><span class="special">/</span><span class="identifier">libs</span><span class="special">/</span><span class="identifier">stacktrace</span><span class="special">/</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">assert_handler</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">38</span>
- <span class="number">2</span><span class="special">#</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">array</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span> <span class="number">5ul</span><span class="special">&gt;::</span><span class="keyword">operator</span><span class="special">[](</span><span class="keyword">unsigned</span> <span class="keyword">long</span><span class="special">)</span>
- <span class="number">3</span><span class="special">#</span> <span class="identifier">bar</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="identifier">at</span> <span class="identifier">boost</span><span class="special">/</span><span class="identifier">libs</span><span class="special">/</span><span class="identifier">stacktrace</span><span class="special">/</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">assert_handler</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">16</span>
- <span class="number">4</span><span class="special">#</span> <span class="identifier">foo</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="identifier">at</span> <span class="identifier">boost</span><span class="special">/</span><span class="identifier">libs</span><span class="special">/</span><span class="identifier">stacktrace</span><span class="special">/</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">assert_handler</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">24</span>
- <span class="number">5</span><span class="special">#</span> <span class="identifier">bar</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="identifier">at</span> <span class="identifier">boost</span><span class="special">/</span><span class="identifier">libs</span><span class="special">/</span><span class="identifier">stacktrace</span><span class="special">/</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">assert_handler</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">20</span>
- <span class="number">6</span><span class="special">#</span> <span class="identifier">foo</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="identifier">at</span> <span class="identifier">boost</span><span class="special">/</span><span class="identifier">libs</span><span class="special">/</span><span class="identifier">stacktrace</span><span class="special">/</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">assert_handler</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">24</span>
- <span class="number">7</span><span class="special">#</span> <span class="identifier">main</span> <span class="identifier">at</span> <span class="identifier">boost</span><span class="special">/</span><span class="identifier">libs</span><span class="special">/</span><span class="identifier">stacktrace</span><span class="special">/</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">assert_handler</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">53</span>
- <span class="number">8</span><span class="special">#</span> <span class="identifier">__libc_start_main</span>
- <span class="number">9</span><span class="special">#</span> <span class="identifier">_start</span>
+ <span class="number">0</span><span class="special">#</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">assertion_failed_msg</span><span class="special">(</span><span class="keyword">char</span> <span class="keyword">const</span><span class="special">*,</span> <span class="keyword">char</span> <span class="keyword">const</span><span class="special">*,</span> <span class="keyword">char</span> <span class="keyword">const</span><span class="special">*,</span> <span class="keyword">char</span> <span class="keyword">const</span><span class="special">*,</span> <span class="keyword">long</span><span class="special">)</span> <span class="identifier">at</span> <span class="special">../</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">assert_handler</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">39</span>
+ <span class="number">1</span><span class="special">#</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">array</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span> <span class="number">5ul</span><span class="special">&gt;::</span><span class="keyword">operator</span><span class="special">[](</span><span class="keyword">unsigned</span> <span class="keyword">long</span><span class="special">)</span> <span class="identifier">at</span> <span class="special">../../../</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">array</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">:</span><span class="number">124</span>
+ <span class="number">2</span><span class="special">#</span> <span class="identifier">bar</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="identifier">at</span> <span class="special">../</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">assert_handler</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">17</span>
+ <span class="number">3</span><span class="special">#</span> <span class="identifier">foo</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="identifier">at</span> <span class="special">../</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">assert_handler</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">25</span>
+ <span class="number">4</span><span class="special">#</span> <span class="identifier">bar</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="identifier">at</span> <span class="special">../</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">assert_handler</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">17</span>
+ <span class="number">5</span><span class="special">#</span> <span class="identifier">foo</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="identifier">at</span> <span class="special">../</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">assert_handler</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">25</span>
+ <span class="number">6</span><span class="special">#</span> <span class="identifier">main</span> <span class="identifier">at</span> <span class="special">../</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">assert_handler</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">54</span>
+ <span class="number">7</span><span class="special">#</span> <span class="number">0</span><span class="identifier">x00007F991FD69F45</span> <span class="identifier">in</span> <span class="special">/</span><span class="identifier">lib</span><span class="special">/</span><span class="identifier">x86_64</span><span class="special">-</span><span class="identifier">linux</span><span class="special">-</span><span class="identifier">gnu</span><span class="special">/</span><span class="identifier">libc</span><span class="special">.</span><span class="identifier">so</span><span class="special">.</span><span class="number">6</span>
+ <span class="number">8</span><span class="special">#</span> <span class="number">0x0000000000401139</span>
 </pre>
 <p>
         Now we do know the steps that led to the assertion and can find the error
@@ -238,75 +239,61 @@
 </h3></div></div></div>
 <p>
         You can provide more information along with exception by embedding stacktraces
-        into the exception. For that you will need to:
+        into the exception. There are many ways to do that, here's how to doe that
+        using Boost.Exception:
       </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
-            Write a basic class that holds the stacktrace:
+            Declare a <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">error_info</span></code> typedef that holds the stacktrace:
           </li></ul></div>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">stacktrace</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">exception</span><span class="special">/</span><span class="identifier">all</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 
-<span class="keyword">struct</span> <span class="identifier">traced</span> <span class="special">{</span>
-    <span class="keyword">const</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">::</span><span class="identifier">stacktrace</span> <span class="identifier">trace</span><span class="special">;</span>
-
-    <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keyword">char</span><span class="special">*</span> <span class="identifier">what</span><span class="special">()</span> <span class="keyword">const</span> <span class="keyword">noexcept</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
-    <span class="keyword">virtual</span> <span class="special">~</span><span class="identifier">traced</span><span class="special">(){}</span>
-<span class="special">};</span>
+<span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">error_info</span><span class="special">&lt;</span><span class="keyword">struct</span> <span class="identifier">tag_stacktrace</span><span class="special">,</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">&gt;</span> <span class="identifier">traced</span><span class="special">;</span>
 </pre>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
-            Write a helper class for appending class <code class="computeroutput"><span class="identifier">traced</span></code>
-            to any exception:
+            Write a helper class for throwing any exception with stacktrce:
           </li></ul></div>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">Exception</span><span class="special">&gt;</span>
-<span class="keyword">struct</span> <span class="identifier">with_trace</span> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">Exception</span><span class="special">,</span> <span class="keyword">public</span> <span class="identifier">traced</span> <span class="special">{</span>
-    <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span><span class="special">...</span> <span class="identifier">Args</span><span class="special">&gt;</span>
-    <span class="identifier">with_trace</span><span class="special">(</span><span class="identifier">Args</span><span class="special">&amp;&amp;...</span> <span class="identifier">args</span><span class="special">)</span>
-        <span class="special">:</span> <span class="identifier">Exception</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">forward</span><span class="special">&lt;</span><span class="identifier">Args</span><span class="special">&gt;(</span><span class="identifier">args</span><span class="special">)...)</span>
-    <span class="special">{}</span>
-
-    <span class="keyword">const</span> <span class="keyword">char</span><span class="special">*</span> <span class="identifier">what</span><span class="special">()</span> <span class="keyword">const</span> <span class="keyword">noexcept</span> <span class="special">{</span>
-        <span class="keyword">return</span> <span class="identifier">Exception</span><span class="special">::</span><span class="identifier">what</span><span class="special">();</span>
-    <span class="special">}</span>
-<span class="special">};</span>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">E</span><span class="special">&gt;</span>
+<span class="keyword">void</span> <span class="identifier">throw_with_trace</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">E</span><span class="special">&amp;</span> <span class="identifier">e</span><span class="special">)</span> <span class="special">{</span>
+    <span class="keyword">throw</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">enable_error_info</span><span class="special">(</span><span class="identifier">e</span><span class="special">)</span>
+        <span class="special">&lt;&lt;</span> <span class="identifier">traced</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">());</span>
+<span class="special">}</span>
 </pre>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
-            Throw <code class="computeroutput"><span class="identifier">with_trace</span><span class="special">&lt;</span><span class="identifier">Exception</span><span class="special">&gt;</span></code>
-            instead of just <code class="computeroutput"><span class="identifier">Exception</span></code>:
+            Use <code class="computeroutput"><span class="identifier">throw_with_trace</span><span class="special">(</span><span class="identifier">E</span><span class="special">);</span></code> instead of just <code class="computeroutput"><span class="keyword">throw</span>
+            <span class="identifier">E</span><span class="special">;</span></code>:
           </li></ul></div>
 <pre class="programlisting"><span class="keyword">if</span> <span class="special">(</span><span class="identifier">i</span> <span class="special">&gt;=</span> <span class="number">4</span><span class="special">)</span>
-    <span class="keyword">throw</span> <span class="identifier">with_trace</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">out_of_range</span><span class="special">&gt;(</span><span class="string">"'i' must be less than 4 in oops()"</span><span class="special">);</span>
+    <span class="identifier">throw_with_trace</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">out_of_range</span><span class="special">(</span><span class="string">"'i' must be less than 4 in oops()"</span><span class="special">));</span>
 <span class="keyword">if</span> <span class="special">(</span><span class="identifier">i</span> <span class="special">&lt;=</span> <span class="number">0</span><span class="special">)</span>
-    <span class="keyword">throw</span> <span class="identifier">with_trace</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">logic_error</span><span class="special">&gt;(</span><span class="string">"'i' must not be greater than zero in oops()"</span><span class="special">);</span>
+    <span class="identifier">throw_with_trace</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">logic_error</span><span class="special">(</span><span class="string">"'i' must not be greater than zero in oops()"</span><span class="special">));</span>
 </pre>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
-            Catch exceptions by <code class="computeroutput"><span class="identifier">traced</span></code>:
+            Process exceptions:
           </li></ul></div>
 <pre class="programlisting"><span class="keyword">try</span> <span class="special">{</span>
     <span class="identifier">foo</span><span class="special">(</span><span class="number">5</span><span class="special">);</span> <span class="comment">// testing assert handler</span>
-<span class="special">}</span> <span class="keyword">catch</span> <span class="special">(</span><span class="keyword">const</span> <span class="identifier">traced</span><span class="special">&amp;</span> <span class="identifier">e</span><span class="special">)</span> <span class="special">{</span>
-    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cerr</span> <span class="special">&lt;&lt;</span> <span class="identifier">e</span><span class="special">.</span><span class="identifier">what</span><span class="special">()</span> <span class="special">&lt;&lt;</span> <span class="char">'\n'</span><span class="special">;</span>
-    <span class="keyword">if</span> <span class="special">(</span><span class="identifier">e</span><span class="special">.</span><span class="identifier">trace</span><span class="special">)</span> <span class="special">{</span>
-        <span class="identifier">std</span><span class="special">::</span><span class="identifier">cerr</span> <span class="special">&lt;&lt;</span> <span class="string">"Backtrace:\n"</span> <span class="special">&lt;&lt;</span> <span class="identifier">e</span><span class="special">.</span><span class="identifier">trace</span> <span class="special">&lt;&lt;</span> <span class="char">'\n'</span><span class="special">;</span>
-    <span class="special">}</span>
 <span class="special">}</span> <span class="keyword">catch</span> <span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">exception</span><span class="special">&amp;</span> <span class="identifier">e</span><span class="special">)</span> <span class="special">{</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">cerr</span> <span class="special">&lt;&lt;</span> <span class="identifier">e</span><span class="special">.</span><span class="identifier">what</span><span class="special">()</span> <span class="special">&lt;&lt;</span> <span class="char">'\n'</span><span class="special">;</span>
+    <span class="keyword">const</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">*</span> <span class="identifier">st</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">get_error_info</span><span class="special">&lt;</span><span class="identifier">traced</span><span class="special">&gt;(</span><span class="identifier">e</span><span class="special">);</span>
+    <span class="keyword">if</span> <span class="special">(</span><span class="identifier">st</span><span class="special">)</span> <span class="special">{</span>
+        <span class="identifier">std</span><span class="special">::</span><span class="identifier">cerr</span> <span class="special">&lt;&lt;</span> <span class="special">*</span><span class="identifier">st</span> <span class="special">&lt;&lt;</span> <span class="char">'\n'</span><span class="special">;</span>
+    <span class="special">}</span>
 <span class="special">}</span>
 </pre>
 <p>
         Code from above will output:
       </p>
 <pre class="programlisting"><span class="char">'i'</span> <span class="identifier">must</span> <span class="keyword">not</span> <span class="identifier">be</span> <span class="identifier">greater</span> <span class="identifier">than</span> <span class="identifier">zero</span> <span class="identifier">in</span> <span class="identifier">oops</span><span class="special">()</span>
-<span class="identifier">Backtrace</span><span class="special">:</span>
- <span class="number">0</span><span class="special">#</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">::</span><span class="identifier">detail</span><span class="special">::</span><span class="identifier">backend</span><span class="special">::</span><span class="identifier">backend</span><span class="special">(</span><span class="keyword">void</span><span class="special">**,</span> <span class="keyword">unsigned</span> <span class="keyword">long</span><span class="special">)</span>
- <span class="number">1</span><span class="special">#</span> <span class="identifier">traced</span><span class="special">::</span><span class="identifier">traced</span><span class="special">()</span> <span class="identifier">at</span> <span class="identifier">boost</span><span class="special">/</span><span class="identifier">libs</span><span class="special">/</span><span class="identifier">stacktrace</span><span class="special">/</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">throwing_st</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">20</span>
- <span class="number">2</span><span class="special">#</span> <span class="identifier">with_trace</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">logic_error</span><span class="special">&gt;::</span><span class="identifier">with_trace</span><span class="special">&lt;</span><span class="keyword">char</span> <span class="keyword">const</span> <span class="special">(&amp;)</span> <span class="special">[</span><span class="number">44</span><span class="special">]&gt;(</span><span class="keyword">char</span> <span class="keyword">const</span> <span class="special">(&amp;)</span> <span class="special">[</span><span class="number">44</span><span class="special">])</span> <span class="identifier">at</span> <span class="identifier">boost</span><span class="special">/</span><span class="identifier">libs</span><span class="special">/</span><span class="identifier">stacktrace</span><span class="special">/</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">throwing_st</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">33</span>
- <span class="number">3</span><span class="special">#</span> <span class="identifier">oops</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span>
- <span class="number">4</span><span class="special">#</span> <span class="identifier">bar</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="identifier">at</span> <span class="identifier">boost</span><span class="special">/</span><span class="identifier">libs</span><span class="special">/</span><span class="identifier">stacktrace</span><span class="special">/</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">throwing_st</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">70</span>
- <span class="number">5</span><span class="special">#</span> <span class="identifier">foo</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="identifier">at</span> <span class="identifier">boost</span><span class="special">/</span><span class="identifier">libs</span><span class="special">/</span><span class="identifier">stacktrace</span><span class="special">/</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">throwing_st</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">75</span>
- <span class="number">6</span><span class="special">#</span> <span class="identifier">bar</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="identifier">at</span> <span class="identifier">boost</span><span class="special">/</span><span class="identifier">libs</span><span class="special">/</span><span class="identifier">stacktrace</span><span class="special">/</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">throwing_st</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">65</span>
- <span class="number">7</span><span class="special">#</span> <span class="identifier">foo</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="identifier">at</span> <span class="identifier">boost</span><span class="special">/</span><span class="identifier">libs</span><span class="special">/</span><span class="identifier">stacktrace</span><span class="special">/</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">throwing_st</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">75</span>
- <span class="number">8</span><span class="special">#</span> <span class="identifier">main</span> <span class="identifier">at</span> <span class="identifier">boost</span><span class="special">/</span><span class="identifier">libs</span><span class="special">/</span><span class="identifier">stacktrace</span><span class="special">/</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">throwing_st</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">93</span>
- <span class="number">9</span><span class="special">#</span> <span class="identifier">__libc_start_main</span>
-<span class="number">10</span><span class="special">#</span> <span class="identifier">_start</span>
+ <span class="number">0</span><span class="special">#</span> <span class="keyword">void</span> <span class="identifier">throw_with_trace</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">logic_error</span><span class="special">&gt;(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">logic_error</span> <span class="keyword">const</span><span class="special">&amp;)</span> <span class="identifier">at</span> <span class="special">../</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">throwing_st</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">22</span>
+ <span class="number">1</span><span class="special">#</span> <span class="identifier">oops</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="identifier">at</span> <span class="special">../</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">throwing_st</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">38</span>
+ <span class="number">2</span><span class="special">#</span> <span class="identifier">bar</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="identifier">at</span> <span class="special">../</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">throwing_st</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">54</span>
+ <span class="number">3</span><span class="special">#</span> <span class="identifier">foo</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="identifier">at</span> <span class="special">../</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">throwing_st</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">59</span>
+ <span class="number">4</span><span class="special">#</span> <span class="identifier">bar</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="identifier">at</span> <span class="special">../</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">throwing_st</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">49</span>
+ <span class="number">5</span><span class="special">#</span> <span class="identifier">foo</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="identifier">at</span> <span class="special">../</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">throwing_st</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">59</span>
+ <span class="number">6</span><span class="special">#</span> <span class="identifier">main</span> <span class="identifier">at</span> <span class="special">../</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">throwing_st</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">76</span>
+ <span class="number">7</span><span class="special">#</span> <span class="number">0</span><span class="identifier">x00007FAC113BEF45</span> <span class="identifier">in</span> <span class="special">/</span><span class="identifier">lib</span><span class="special">/</span><span class="identifier">x86_64</span><span class="special">-</span><span class="identifier">linux</span><span class="special">-</span><span class="identifier">gnu</span><span class="special">/</span><span class="identifier">libc</span><span class="special">.</span><span class="identifier">so</span><span class="special">.</span><span class="number">6</span>
+ <span class="number">8</span><span class="special">#</span> <span class="number">0x0000000000402ED9</span>
 </pre>
 </div>
 <div class="section">
@@ -321,7 +308,7 @@
 <p>
         Just define <span class="bold"><strong>BOOST_STACKTRACE_LINK</strong></span> for a
         whole project. Now you can enable/disable stacktraces by just linking with
-        different backends:
+        different libraries:
       </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
@@ -329,12 +316,12 @@
             to disable backtracing
           </li>
 <li class="listitem">
-            link with other backends to output backtraces
+            link with other <code class="computeroutput"><span class="identifier">boost_stacktrace_</span><span class="special">*</span></code> libraries
           </li>
 </ul></div>
 <p>
-        See <a class="link" href="build_macros_and_backends.html" title="Build, Macros and Backends">section "Build,
-        Macros and Backends"</a> for more info.
+        See <a class="link" href="../">section "Build Macros"</a>
+        for more info.
       </p>
 </div>
 <div class="section">
@@ -343,7 +330,7 @@
       stacktraces by specified format</a>
 </h3></div></div></div>
 <p>
-        <code class="computeroutput"><a class="link" href="../boost_stacktrace_header_reference.html#boost.stacktrace.stacktrace">boost::stacktrace::stacktrace</a></code>
+        <code class="computeroutput"><a class="link" href="../reference.html#boost.stacktrace.stacktrace">boost::stacktrace::stacktrace</a></code>
         provides access to individual <code class="computeroutput"><a class="link" href="../boost/stacktrace/frame.html" title="Class frame">frames</a></code>
         of the stacktrace, so that you could save stacktrace information in your
         own format. Consider the example, that saves only function addresses of each
@@ -400,23 +387,21 @@
       control over stacktrace output format</a>
 </h3></div></div></div>
 <p>
-        You may control maximal stacktrace length using <code class="computeroutput"><a class="link" href="../BOOST_STACKTRACE_DEFAULT_MAX_DEPTH.html" title="Macro BOOST_STACKTRACE_DEFAULT_MAX_DEPTH">BOOST_STACKTRACE_DEFAULT_MAX_DEPTH</a></code>
-        and even override the behavior of default stacktrace output operator by defining
+        You may override the behavior of default stacktrace output operator by defining
         the macro from Boost.Config <code class="computeroutput">BOOST_USER_CONFIG</code>
         to point to a file like following:
       </p>
 <pre class="programlisting"><span class="preprocessor">#ifndef</span> <span class="identifier">USER_CONFIG_HPP</span>
 <span class="preprocessor">#define</span> <span class="identifier">USER_CONFIG_HPP</span>
 
-<span class="preprocessor">#define</span> <span class="identifier">BOOST_STACKTRACE_DEFAULT_MAX_DEPTH</span> <span class="number">5</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">stacktrace</span><span class="special">/</span><span class="identifier">stacktrace_fwd</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iosfwd</span><span class="special">&gt;</span>
 
 <span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span> <span class="keyword">namespace</span> <span class="identifier">stacktrace</span> <span class="special">{</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">TraitsT</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">Depth</span><span class="special">&gt;</span>
-<span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_ostream</span><span class="special">&lt;</span><span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">TraitsT</span><span class="special">&gt;&amp;</span> <span class="identifier">do_stream_st</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_ostream</span><span class="special">&lt;</span><span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">TraitsT</span><span class="special">&gt;&amp;</span> <span class="identifier">os</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">basic_stacktrace</span><span class="special">&lt;</span><span class="identifier">Depth</span><span class="special">&gt;&amp;</span> <span class="identifier">bt</span><span class="special">);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">TraitsT</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">Allocator</span><span class="special">&gt;</span>
+<span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_ostream</span><span class="special">&lt;</span><span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">TraitsT</span><span class="special">&gt;&amp;</span> <span class="identifier">do_stream_st</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_ostream</span><span class="special">&lt;</span><span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">TraitsT</span><span class="special">&gt;&amp;</span> <span class="identifier">os</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">basic_stacktrace</span><span class="special">&lt;</span><span class="identifier">Allocator</span><span class="special">&gt;&amp;</span> <span class="identifier">bt</span><span class="special">);</span>
 
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">TraitsT</span><span class="special">&gt;</span>
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_ostream</span><span class="special">&lt;</span><span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">TraitsT</span><span class="special">&gt;&amp;</span> <span class="keyword">operator</span><span class="special">&lt;&lt;(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_ostream</span><span class="special">&lt;</span><span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">TraitsT</span><span class="special">&gt;&amp;</span> <span class="identifier">os</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">stacktrace</span><span class="special">&amp;</span> <span class="identifier">bt</span><span class="special">)</span> <span class="special">{</span>
@@ -432,8 +417,8 @@
       </p>
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span> <span class="keyword">namespace</span> <span class="identifier">stacktrace</span> <span class="special">{</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">TraitsT</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">Depth</span><span class="special">&gt;</span>
-<span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_ostream</span><span class="special">&lt;</span><span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">TraitsT</span><span class="special">&gt;&amp;</span> <span class="identifier">do_stream_st</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_ostream</span><span class="special">&lt;</span><span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">TraitsT</span><span class="special">&gt;&amp;</span> <span class="identifier">os</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">basic_stacktrace</span><span class="special">&lt;</span><span class="identifier">Depth</span><span class="special">&gt;&amp;</span> <span class="identifier">bt</span><span class="special">)</span> <span class="special">{</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">TraitsT</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">Allocator</span><span class="special">&gt;</span>
+<span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_ostream</span><span class="special">&lt;</span><span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">TraitsT</span><span class="special">&gt;&amp;</span> <span class="identifier">do_stream_st</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_ostream</span><span class="special">&lt;</span><span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">TraitsT</span><span class="special">&gt;&amp;</span> <span class="identifier">os</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">basic_stacktrace</span><span class="special">&lt;</span><span class="identifier">Allocator</span><span class="special">&gt;&amp;</span> <span class="identifier">bt</span><span class="special">)</span> <span class="special">{</span>
     <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">streamsize</span> <span class="identifier">w</span> <span class="special">=</span> <span class="identifier">os</span><span class="special">.</span><span class="identifier">width</span><span class="special">();</span>
     <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">frames</span> <span class="special">=</span> <span class="identifier">bt</span><span class="special">.</span><span class="identifier">size</span><span class="special">();</span>
     <span class="keyword">for</span> <span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">&lt;</span> <span class="identifier">frames</span><span class="special">;</span> <span class="special">++</span><span class="identifier">i</span><span class="special">)</span> <span class="special">{</span>
@@ -454,21 +439,16 @@
         Code from above will output:
       </p>
 <pre class="programlisting"><span class="identifier">Terminate</span> <span class="identifier">called</span><span class="special">:</span>
- <span class="number">0</span><span class="special">#</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">::</span><span class="identifier">detail</span><span class="special">::</span><span class="identifier">backend</span><span class="special">::</span><span class="identifier">backend</span><span class="special">(</span><span class="keyword">void</span><span class="special">**,</span> <span class="keyword">unsigned</span> <span class="keyword">long</span><span class="special">)</span>
- <span class="number">1</span><span class="special">#</span> <span class="identifier">bar</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span>
- <span class="number">2</span><span class="special">#</span> <span class="identifier">foo</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span>
- <span class="number">3</span><span class="special">#</span> <span class="identifier">bar</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span>
- <span class="number">4</span><span class="special">#</span> <span class="identifier">foo</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span>
+ <span class="number">0</span><span class="special">#</span> <span class="identifier">bar</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span>
+ <span class="number">1</span><span class="special">#</span> <span class="identifier">foo</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span>
+ <span class="number">2</span><span class="special">#</span> <span class="identifier">bar</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span>
+ <span class="number">3</span><span class="special">#</span> <span class="identifier">foo</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span>
 </pre>
-</div>
-<div class="footnotes">
-<br><hr width="100" align="left">
-<div class="footnote"><p><sup>[<a name="ftn.boost_stacktrace.getting_started.handle_terminates_aborts_and_seg.f0" href="#boost_stacktrace.getting_started.handle_terminates_aborts_and_seg.f0" class="para">1</a>] </sup>Strictly speaking this code is not async-signal-safe, because it uses std::cerr. <a class="link" href="build_macros_and_backends.html" title="Build, Macros and Backends">Section "Build, Macros and Backends"</a> describes async-signal-safe backends, so if you will use the noop backend code becomes absolutely valid as that backens always returns 0 frames and <code class="computeroutput"><span class="keyword">operator</span><span class="special">&lt;&lt;</span></code> will be never called. </p></div>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2016 Antony Polukhin<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2016, 2017 Antony Polukhin<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>
@@ -476,7 +456,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="../index.html"><img src="http://www.boost.org/doc/libs/1_61_0/doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="http://www.boost.org/doc/libs/1_61_0/doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="http://www.boost.org/doc/libs/1_61_0/doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="build_macros_and_backends.html"><img src="http://www.boost.org/doc/libs/1_61_0/doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="../index.html"><img src="http://www.boost.org/doc/libs/1_63_0/doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="http://www.boost.org/doc/libs/1_63_0/doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="http://www.boost.org/doc/libs/1_63_0/doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="configuration_and_build.html"><img src="http://www.boost.org/doc/libs/1_63_0/doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

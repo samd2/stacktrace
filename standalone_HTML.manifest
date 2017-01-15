@@ -1,9 +1,11 @@
 index.html
 boost_stacktrace/getting_started.html
-boost_stacktrace/build_macros_and_backends.html
+boost_stacktrace/configuration_and_build.html
 boost_stacktrace/acknowledgements.html
-boost_stacktrace_header_reference.html
+reference.html
 boost/stacktrace/basic_stacktrace.html
-boost/stacktrace/const_iterator.html
+boost/stacktrace/operator_idm45739409500096.html
+boost/stacktrace/operator_idm45739409494112.html
 boost/stacktrace/frame.html
-BOOST_STACKTRACE_DEFAULT_MAX_DEPTH.html
+boost/stacktrace/this_thread_frames.html
+BOOST_STACKTRACE_FUNCTION.html

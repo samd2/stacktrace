@@ -4,8 +4,9 @@ boost_stacktrace/configuration_and_build.html
 boost_stacktrace/acknowledgements.html
 reference.html
 boost/stacktrace/basic_stacktrace.html
-boost/stacktrace/operator_idm45739409500096.html
-boost/stacktrace/operator_idm45739409494112.html
+boost/stacktrace/operator_idm45971007983040.html
+boost/stacktrace/operator_idm45971007977056.html
 boost/stacktrace/frame.html
-boost/stacktrace/this_thread_frames.html
-BOOST_STACKTRACE_FUNCTION.html
+boost/stacktrace/safe_dum_idm45971007879088.html
+boost/stacktrace/safe_dum_idm45971007873616.html
+boost/stacktrace/safe_dum_idm45971007869136.html

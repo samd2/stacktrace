@@ -43,6 +43,8 @@
       function information from pointer</a></span></dt>
 <dt><span class="section"><a href="getting_started.html#boost_stacktrace.getting_started.global_control_over_stacktrace_o">Global
       control over stacktrace output format</a></span></dt>
+<dt><span class="section"><a href="getting_started.html#boost_stacktrace.getting_started.store_stacktraces_into_shared_me">Store
+      stacktraces into shared memory</a></span></dt>
 </dl></div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
@@ -98,79 +100,88 @@
         improve debugging and fixing.
       </p>
 <p>
-        To deal with Segmentation Faults and <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">terminate</span></code>
-        calls we would need to write handlers:
+        <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">terminate</span></code> calls <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">abort</span></code>,
+        so we need to capture stack traces on Segmentation Faults and Abort signals.
       </p>
-<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">exception</span><span class="special">&gt;</span>    <span class="comment">// std::set_terminate, std::abort</span>
-<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">signal</span><span class="special">.</span><span class="identifier">h</span><span class="special">&gt;</span>     <span class="comment">// ::signal</span>
+<div class="warning"><table border="0" summary="Warning">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="http://www.boost.org/doc/libs/1_63_0/doc/src/images/warning.png"></td>
+<th align="left">Warning</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+          Writing a signal handler requires high attention! Only a few system calls
+          allowed in signal handlers, so there's no cross platform way to print a
+          stacktrace without a risk of deadlocking. The only way to deal with the
+          problem - <span class="bold"><strong>dump raw stacktrace into file/socket/shared
+          memory and parse it on program restart</strong></span>.
+        </p></td></tr>
+</table></div>
+<p>
+        Let's write a handler to safely dump stacktrace:
+      </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">signal</span><span class="special">.</span><span class="identifier">h</span><span class="special">&gt;</span>     <span class="comment">// ::signal</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">cstdlib</span><span class="special">&gt;</span>      <span class="comment">// std::_Exit</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">stacktrace</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
-<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostream</span><span class="special">&gt;</span>     <span class="comment">// std::cerr</span>
-
-<span class="keyword">void</span> <span class="identifier">my_terminate_handler</span><span class="special">()</span> <span class="special">{</span>
-    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cerr</span> <span class="special">&lt;&lt;</span> <span class="string">"Terminate called:\n"</span> <span class="special">&lt;&lt;</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">()</span> <span class="special">&lt;&lt;</span> <span class="char">'\n'</span><span class="special">;</span>
-    <span class="identifier">std</span><span class="special">::</span><span class="identifier">abort</span><span class="special">();</span>
-<span class="special">}</span>
 
 <span class="keyword">void</span> <span class="identifier">my_signal_handler</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">signum</span><span class="special">)</span> <span class="special">{</span>
     <span class="special">::</span><span class="identifier">signal</span><span class="special">(</span><span class="identifier">signum</span><span class="special">,</span> <span class="identifier">SIG_DFL</span><span class="special">);</span>
-    <span class="comment">//boost::stacktrace::this_thread_frames::dump("backtrace_file.txt")</span>
-    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">::</span><span class="identifier">stacktrace</span> <span class="identifier">bt</span><span class="special">;</span>
-    <span class="keyword">if</span> <span class="special">(</span><span class="identifier">bt</span><span class="special">)</span> <span class="special">{</span>
-        <span class="identifier">std</span><span class="special">::</span><span class="identifier">cerr</span> <span class="special">&lt;&lt;</span> <span class="string">"Signal "</span> <span class="special">&lt;&lt;</span> <span class="identifier">signum</span> <span class="special">&lt;&lt;</span> <span class="string">", backtrace:\n"</span> <span class="special">&lt;&lt;</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">()</span> <span class="special">&lt;&lt;</span> <span class="char">'\n'</span><span class="special">;</span> <span class="comment">// This code is not async-signal-safe! Examples will be changed soon</span>
-    <span class="special">}</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">::</span><span class="identifier">safe_dump_to</span><span class="special">(</span><span class="string">"./backtrace.dump"</span><span class="special">);</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">_Exit</span><span class="special">(-</span><span class="number">1</span><span class="special">);</span>
 <span class="special">}</span>
 </pre>
 <p>
-        After that we can set them as a default handlers and get some more information
-        on incidents:
+        Registering our handler:
       </p>
-<pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">set_terminate</span><span class="special">(&amp;</span><span class="identifier">my_terminate_handler</span><span class="special">);</span>
-<span class="special">::</span><span class="identifier">signal</span><span class="special">(</span><span class="identifier">SIGSEGV</span><span class="special">,</span> <span class="special">&amp;</span><span class="identifier">my_signal_handler</span><span class="special">);</span>
+<pre class="programlisting"><span class="special">::</span><span class="identifier">signal</span><span class="special">(</span><span class="identifier">SIGSEGV</span><span class="special">,</span> <span class="special">&amp;</span><span class="identifier">my_signal_handler</span><span class="special">);</span>
 <span class="special">::</span><span class="identifier">signal</span><span class="special">(</span><span class="identifier">SIGABRT</span><span class="special">,</span> <span class="special">&amp;</span><span class="identifier">my_signal_handler</span><span class="special">);</span>
 </pre>
 <p>
+        At program start we check for a file with stacktrace and if it exist - we're
+        writing it in human readable format:
+      </p>
+<pre class="programlisting"><span class="keyword">if</span> <span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">filesystem</span><span class="special">::</span><span class="identifier">exists</span><span class="special">(</span><span class="string">"./backtrace.dump"</span><span class="special">))</span> <span class="special">{</span>
+    <span class="comment">// there is a backtrace</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">ifstream</span> <span class="identifier">ifs</span><span class="special">(</span><span class="string">"./backtrace.dump"</span><span class="special">);</span>
+
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">::</span><span class="identifier">stacktrace</span> <span class="identifier">st</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">::</span><span class="identifier">from_dump</span><span class="special">(</span><span class="identifier">ifs</span><span class="special">);</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Previous run crashed:\n"</span> <span class="special">&lt;&lt;</span> <span class="identifier">st</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+
+    <span class="comment">// cleaning up</span>
+    <span class="identifier">ifs</span><span class="special">.</span><span class="identifier">close</span><span class="special">();</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">filesystem</span><span class="special">::</span><span class="identifier">remove</span><span class="special">(</span><span class="string">"./backtrace.dump"</span><span class="special">);</span>
+<span class="special">}</span>
+</pre>
+<p>
         Now we'll get the following output on <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">terminate</span></code>
-        call:
+        call after the program restarts:
       </p>
-<pre class="programlisting"><span class="identifier">Terminate</span> <span class="identifier">called</span><span class="special">:</span>
- <span class="number">0</span><span class="special">#</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">::</span><span class="identifier">detail</span><span class="special">::</span><span class="identifier">backend</span><span class="special">::</span><span class="identifier">backend</span><span class="special">(</span><span class="keyword">void</span><span class="special">**,</span> <span class="keyword">unsigned</span> <span class="keyword">long</span><span class="special">)</span>
- <span class="number">1</span><span class="special">#</span> <span class="identifier">my_terminate_handler</span><span class="special">()</span> <span class="identifier">at</span> <span class="identifier">boost</span><span class="special">/</span><span class="identifier">libs</span><span class="special">/</span><span class="identifier">stacktrace</span><span class="special">/</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">terminate_handler</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">37</span>
- <span class="number">2</span><span class="special">#</span> <span class="number">0</span><span class="identifier">x7f624107a6b6</span>
- <span class="number">3</span><span class="special">#</span> <span class="number">0</span><span class="identifier">x7f624107a701</span>
- <span class="number">4</span><span class="special">#</span> <span class="identifier">bar</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="identifier">at</span> <span class="identifier">boost</span><span class="special">/</span><span class="identifier">libs</span><span class="special">/</span><span class="identifier">stacktrace</span><span class="special">/</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">terminate_handler</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">18</span>
- <span class="number">5</span><span class="special">#</span> <span class="identifier">foo</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="identifier">at</span> <span class="identifier">boost</span><span class="special">/</span><span class="identifier">libs</span><span class="special">/</span><span class="identifier">stacktrace</span><span class="special">/</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">terminate_handler</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">22</span>
- <span class="number">6</span><span class="special">#</span> <span class="identifier">bar</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="identifier">at</span> <span class="identifier">boost</span><span class="special">/</span><span class="identifier">libs</span><span class="special">/</span><span class="identifier">stacktrace</span><span class="special">/</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">terminate_handler</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">18</span>
- <span class="number">7</span><span class="special">#</span> <span class="identifier">foo</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="identifier">at</span> <span class="identifier">boost</span><span class="special">/</span><span class="identifier">libs</span><span class="special">/</span><span class="identifier">stacktrace</span><span class="special">/</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">terminate_handler</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">22</span>
- <span class="number">8</span><span class="special">#</span> <span class="identifier">main</span> <span class="identifier">at</span> <span class="identifier">boost</span><span class="special">/</span><span class="identifier">libs</span><span class="special">/</span><span class="identifier">stacktrace</span><span class="special">/</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">terminate_handler</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">64</span>
- <span class="number">9</span><span class="special">#</span> <span class="identifier">__libc_start_main</span>
-<span class="number">10</span><span class="special">#</span> <span class="identifier">_start</span>
+<pre class="programlisting"><span class="identifier">Previous</span> <span class="identifier">run</span> <span class="identifier">crashed</span><span class="special">:</span>
+ <span class="number">0</span><span class="special">#</span> <span class="number">0</span><span class="identifier">x00007F2EC0A6A8EF</span>
+ <span class="number">1</span><span class="special">#</span> <span class="identifier">my_signal_handler</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="identifier">at</span> <span class="special">../</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">terminate_handler</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">37</span>
+ <span class="number">2</span><span class="special">#</span> <span class="number">0</span><span class="identifier">x00007F2EBFD84CB0</span>
+ <span class="number">3</span><span class="special">#</span> <span class="number">0</span><span class="identifier">x00007F2EBFD84C37</span>
+ <span class="number">4</span><span class="special">#</span> <span class="number">0</span><span class="identifier">x00007F2EBFD88028</span>
+ <span class="number">5</span><span class="special">#</span> <span class="number">0</span><span class="identifier">x00007F2EC0395BBD</span>
+ <span class="number">6</span><span class="special">#</span> <span class="number">0</span><span class="identifier">x00007F2EC0393B96</span>
+ <span class="number">7</span><span class="special">#</span> <span class="number">0</span><span class="identifier">x00007F2EC0393BE1</span>
+ <span class="number">8</span><span class="special">#</span> <span class="identifier">bar</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="identifier">at</span> <span class="special">../</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">terminate_handler</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">18</span>
+ <span class="number">9</span><span class="special">#</span> <span class="identifier">foo</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="identifier">at</span> <span class="special">../</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">terminate_handler</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">22</span>
+<span class="number">10</span><span class="special">#</span> <span class="identifier">bar</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="identifier">at</span> <span class="special">../</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">terminate_handler</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">14</span>
+<span class="number">11</span><span class="special">#</span> <span class="identifier">foo</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="identifier">at</span> <span class="special">../</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">terminate_handler</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">22</span>
+<span class="number">12</span><span class="special">#</span> <span class="identifier">main</span> <span class="identifier">at</span> <span class="special">../</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">terminate_handler</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">84</span>
+<span class="number">13</span><span class="special">#</span> <span class="number">0</span><span class="identifier">x00007F2EBFD6FF45</span>
+<span class="number">14</span><span class="special">#</span> <span class="number">0x0000000000402209</span>
 </pre>
-<p>
-        And the following output on Abort:
-      </p>
-<pre class="programlisting"><span class="identifier">Signal</span> <span class="number">6</span><span class="special">,</span> <span class="identifier">backtrace</span><span class="special">:</span>
- <span class="number">0</span><span class="special">#</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">::</span><span class="identifier">detail</span><span class="special">::</span><span class="identifier">backend</span><span class="special">::</span><span class="identifier">backend</span><span class="special">(</span><span class="keyword">void</span><span class="special">**,</span> <span class="keyword">unsigned</span> <span class="keyword">long</span><span class="special">)</span>
- <span class="number">1</span><span class="special">#</span> <span class="identifier">my_signal_handler</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span>
- <span class="number">2</span><span class="special">#</span> <span class="number">0</span><span class="identifier">x7f6240a3a4b0</span>
- <span class="number">3</span><span class="special">#</span> <span class="identifier">gsignal</span>
- <span class="number">4</span><span class="special">#</span> <span class="identifier">abort</span>
- <span class="number">5</span><span class="special">#</span> <span class="identifier">my_terminate_handler</span><span class="special">()</span>
- <span class="number">6</span><span class="special">#</span> <span class="number">0</span><span class="identifier">x7f624107a6b6</span>
- <span class="number">7</span><span class="special">#</span> <span class="number">0</span><span class="identifier">x7f624107a701</span>
- <span class="number">8</span><span class="special">#</span> <span class="identifier">bar</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="identifier">at</span> <span class="identifier">boost</span><span class="special">/</span><span class="identifier">libs</span><span class="special">/</span><span class="identifier">stacktrace</span><span class="special">/</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">terminate_handler</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">18</span>
- <span class="number">9</span><span class="special">#</span> <span class="identifier">foo</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="identifier">at</span> <span class="identifier">boost</span><span class="special">/</span><span class="identifier">libs</span><span class="special">/</span><span class="identifier">stacktrace</span><span class="special">/</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">terminate_handler</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">22</span>
-<span class="number">10</span><span class="special">#</span> <span class="identifier">bar</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="identifier">at</span> <span class="identifier">boost</span><span class="special">/</span><span class="identifier">libs</span><span class="special">/</span><span class="identifier">stacktrace</span><span class="special">/</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">terminate_handler</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">18</span>
-<span class="number">11</span><span class="special">#</span> <span class="identifier">foo</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="identifier">at</span> <span class="identifier">boost</span><span class="special">/</span><span class="identifier">libs</span><span class="special">/</span><span class="identifier">stacktrace</span><span class="special">/</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">terminate_handler</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">22</span>
-<span class="number">12</span><span class="special">#</span> <span class="identifier">main</span> <span class="identifier">at</span> <span class="identifier">boost</span><span class="special">/</span><span class="identifier">libs</span><span class="special">/</span><span class="identifier">stacktrace</span><span class="special">/</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">terminate_handler</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">64</span>
-<span class="number">13</span><span class="special">#</span> <span class="identifier">__libc_start_main</span>
-<span class="number">14</span><span class="special">#</span> <span class="identifier">_start</span>
-</pre>
-<p>
-        The output stacktrace may be corrupted by previous actions. But now at least
-        some basic information is available to work with.
-      </p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="http://www.boost.org/doc/libs/1_63_0/doc/src/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+          Function names from shared libraries may not be decoded due to address
+          space layout randomization. Still better than nothing.
+        </p></td></tr>
+</table></div>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
@@ -320,8 +331,8 @@
           </li>
 </ul></div>
 <p>
-        See <a class="link" href="../">section "Build Macros"</a>
-        for more info.
+        See <a class="link" href="configuration_and_build.html" title="Configuration and Build">section "Configuration
+        and Build"</a> for more info.
       </p>
 </div>
 <div class="section">
@@ -443,6 +454,72 @@
  <span class="number">1</span><span class="special">#</span> <span class="identifier">foo</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span>
  <span class="number">2</span><span class="special">#</span> <span class="identifier">bar</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span>
  <span class="number">3</span><span class="special">#</span> <span class="identifier">foo</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span>
+</pre>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="boost_stacktrace.getting_started.store_stacktraces_into_shared_me"></a><a class="link" href="getting_started.html#boost_stacktrace.getting_started.store_stacktraces_into_shared_me" title="Store stacktraces into shared memory">Store
+      stacktraces into shared memory</a>
+</h3></div></div></div>
+<p>
+        There's a way to serialize stacktrace in async safe manner and share that
+        serialized representation with another preocess. Here's another example with
+        signal handlers.
+      </p>
+<p>
+        This example is very close to the <a class="link" href="getting_started.html#boost_stacktrace.getting_started.handle_terminates_aborts_and_seg" title="Handle terminates, aborts and Segmentation Faults">"Handle
+        terminates, aborts and Segmentation Faults"</a>, but this time we
+        are dumping stacktrace into shared memory:
+      </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">stacktrace</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">interprocess</span><span class="special">/</span><span class="identifier">shared_memory_object</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">interprocess</span><span class="special">/</span><span class="identifier">mapped_region</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+
+<span class="identifier">boost</span><span class="special">::</span><span class="identifier">interprocess</span><span class="special">::</span><span class="identifier">shared_memory_object</span> <span class="identifier">g_shm</span><span class="special">;</span> <span class="comment">// inited at program start</span>
+<span class="identifier">boost</span><span class="special">::</span><span class="identifier">interprocess</span><span class="special">::</span><span class="identifier">mapped_region</span> <span class="identifier">g_region</span><span class="special">;</span>     <span class="comment">// inited at program start</span>
+
+
+<span class="keyword">void</span> <span class="identifier">my_signal_handler2</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">signum</span><span class="special">)</span> <span class="special">{</span>
+    <span class="special">::</span><span class="identifier">signal</span><span class="special">(</span><span class="identifier">signum</span><span class="special">,</span> <span class="identifier">SIG_DFL</span><span class="special">);</span>
+    <span class="keyword">bool</span><span class="special">*</span> <span class="identifier">b</span> <span class="special">=</span> <span class="keyword">static_cast</span><span class="special">&lt;</span><span class="keyword">bool</span><span class="special">*&gt;(</span><span class="identifier">g_region</span><span class="special">.</span><span class="identifier">get_address</span><span class="special">());</span>
+    <span class="special">*</span><span class="identifier">b</span> <span class="special">=</span> <span class="keyword">true</span><span class="special">;</span>                                  <span class="comment">// flag that memory constains stacktrace</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">::</span><span class="identifier">safe_dump_to</span><span class="special">(</span><span class="identifier">b</span> <span class="special">+</span> <span class="number">1</span><span class="special">,</span> <span class="identifier">g_region</span><span class="special">.</span><span class="identifier">get_size</span><span class="special">()</span> <span class="special">-</span> <span class="keyword">sizeof</span><span class="special">(</span><span class="keyword">bool</span><span class="special">));</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">_Exit</span><span class="special">(-</span><span class="number">1</span><span class="special">);</span>
+<span class="special">}</span>
+</pre>
+<p>
+        After registring signal handlers and catching a signal, we may print stacktrace
+        dumps on program restart:
+      </p>
+<pre class="programlisting"><span class="keyword">bool</span><span class="special">*</span> <span class="identifier">b</span> <span class="special">=</span> <span class="keyword">static_cast</span><span class="special">&lt;</span><span class="keyword">bool</span><span class="special">*&gt;(</span><span class="identifier">g_region</span><span class="special">.</span><span class="identifier">get_address</span><span class="special">());</span>   <span class="comment">// getting flag that memory constains stacktrace</span>
+<span class="keyword">if</span> <span class="special">(*</span><span class="identifier">b</span><span class="special">)</span> <span class="special">{</span>                                               <span class="comment">// checking that memory constains stacktrace</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">::</span><span class="identifier">stacktrace</span> <span class="identifier">st</span>
+        <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">::</span><span class="identifier">from_dump</span><span class="special">(</span><span class="identifier">b</span> <span class="special">+</span> <span class="number">1</span><span class="special">,</span> <span class="identifier">g_region</span><span class="special">.</span><span class="identifier">get_size</span><span class="special">()</span> <span class="special">-</span> <span class="keyword">sizeof</span><span class="special">(</span><span class="keyword">bool</span><span class="special">));</span>
+
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Previous run crashed and left trace in shared memory:\n"</span> <span class="special">&lt;&lt;</span> <span class="identifier">st</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+    <span class="special">*</span><span class="identifier">b</span> <span class="special">=</span> <span class="keyword">false</span><span class="special">;</span>
+<span class="special">}</span>
+</pre>
+<p>
+        The program output will be the following:
+      </p>
+<pre class="programlisting"><span class="identifier">Previous</span> <span class="identifier">run</span> <span class="identifier">crashed</span> <span class="keyword">and</span> <span class="identifier">left</span> <span class="identifier">trace</span> <span class="identifier">in</span> <span class="identifier">shared</span> <span class="identifier">memory</span><span class="special">:</span>
+ <span class="number">0</span><span class="special">#</span> <span class="number">0</span><span class="identifier">x00007FD51C7218EF</span>
+ <span class="number">1</span><span class="special">#</span> <span class="identifier">my_signal_handler2</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="identifier">at</span> <span class="special">../</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">terminate_handler</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">68</span>
+ <span class="number">2</span><span class="special">#</span> <span class="number">0</span><span class="identifier">x00007FD51B833CB0</span>
+ <span class="number">3</span><span class="special">#</span> <span class="number">0</span><span class="identifier">x00007FD51B833C37</span>
+ <span class="number">4</span><span class="special">#</span> <span class="number">0</span><span class="identifier">x00007FD51B837028</span>
+ <span class="number">5</span><span class="special">#</span> <span class="number">0</span><span class="identifier">x00007FD51BE44BBD</span>
+ <span class="number">6</span><span class="special">#</span> <span class="number">0</span><span class="identifier">x00007FD51BE42B96</span>
+ <span class="number">7</span><span class="special">#</span> <span class="number">0</span><span class="identifier">x00007FD51BE42BE1</span>
+ <span class="number">8</span><span class="special">#</span> <span class="identifier">bar</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="identifier">at</span> <span class="special">../</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">terminate_handler</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">18</span>
+ <span class="number">9</span><span class="special">#</span> <span class="identifier">foo</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="identifier">at</span> <span class="special">../</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">terminate_handler</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">22</span>
+<span class="number">10</span><span class="special">#</span> <span class="identifier">bar</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="identifier">at</span> <span class="special">../</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">terminate_handler</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">14</span>
+<span class="number">11</span><span class="special">#</span> <span class="identifier">foo</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="identifier">at</span> <span class="special">../</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">terminate_handler</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">22</span>
+<span class="number">12</span><span class="special">#</span> <span class="identifier">run_3</span><span class="special">(</span><span class="keyword">char</span> <span class="keyword">const</span><span class="special">**)</span> <span class="identifier">at</span> <span class="special">../</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">terminate_handler</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">152</span>
+<span class="number">13</span><span class="special">#</span> <span class="identifier">main</span> <span class="identifier">at</span> <span class="special">../</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">terminate_handler</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">207</span>
+<span class="number">14</span><span class="special">#</span> <span class="number">0</span><span class="identifier">x00007FD51B81EF45</span>
+<span class="number">15</span><span class="special">#</span> <span class="number">0x0000000000402999</span>
 </pre>
 </div>
 </div>

@@ -133,7 +133,7 @@
 <tr>
 <td>
               <p>
-                <span class="emphasis"><em>default MSVC</em></span>
+                <span class="emphasis"><em>default for MSVC</em></span> / <span class="bold"><strong>BOOST_STACKTRACE_USE_WINDBG</strong></span>
               </p>
             </td>
 <td>
@@ -143,12 +143,12 @@
             </td>
 <td>
               <p>
-                Uses COM and MSVC to show debug info.
+                Uses COM to show debug info.
               </p>
             </td>
 <td>
               <p>
-                MSVC
+                Windows
               </p>
             </td>
 <td>
@@ -175,13 +175,13 @@
             </td>
 <td>
               <p>
-                Uses compiler intrinsics to collect stacktrace and <code class="computeroutput"><span class="special">::</span><span class="identifier">dladdr</span></code>
-                to show information about the symbol. Requires linking with <span class="bold"><strong>libdl</strong></span> library.
+                Uses compiler intrinsics to collect stacktrace and if possible <code class="computeroutput"><span class="special">::</span><span class="identifier">dladdr</span></code>
+                to show information about the symbol. Requires linking with <span class="bold"><strong>libdl</strong></span> library on POSIX platforms.
               </p>
             </td>
 <td>
               <p>
-                GCC/MinGW/Clang...
+                Not MSVC compiler on POSIX or Windows
               </p>
             </td>
 <td>
@@ -208,8 +208,8 @@
             </td>
 <td>
               <p>
-                Requires linking with <span class="bold"><strong>libdl</strong></span> and
-                <span class="bold"><strong>libbacktrace</strong></span> libraries. <span class="bold"><strong>libbacktrace</strong></span> is probably already installed
+                Requires linking with <span class="bold"><strong>libdl</strong></span> on POSIX
+                and <span class="bold"><strong>libbacktrace</strong></span> libraries. <span class="bold"><strong>libbacktrace</strong></span> is probably already installed
                 in your system, or built into your compiler. Otherwise it can be
                 downloaded <a href="https://github.com/gcc-mirror/gcc/tree/master/libbacktrace" target="_top">from
                 here</a>
@@ -217,7 +217,7 @@
             </td>
 <td>
               <p>
-                GCC/MinGW/Clang...
+                GCC/MinGW/Clang... on POSIX or Windows
               </p>
             </td>
 <td>
@@ -251,7 +251,7 @@
             </td>
 <td>
               <p>
-                GCC/MinGW/Clang...
+                GCC/MinGW/Clang... on POSIX
               </p>
             </td>
 <td>
@@ -301,13 +301,13 @@
 </tbody>
 <tbody class="footnotes"><tr><td colspan="6">
 <div class="footnote"><p><sup>[<a name="ftn.boost_stacktrace.configuration_and_build.f0" href="#boost_stacktrace.configuration_and_build.f0" class="para">a</a>] </sup>
-                  This will provide more readable backtraces if the binary is built
-                  with debug information.
+                  This will provide more readable backtraces with <span class="bold"><strong>source
+                  code locations</strong></span> if the binary is built with debug information.
                 </p></div>
 <div class="footnote"><p><sup>[<a name="ftn.boost_stacktrace.configuration_and_build.f1" href="#boost_stacktrace.configuration_and_build.f1" class="para">b</a>] </sup>
                   This will provide readable function names in backtrace for functions
                   that are exported by the binary. Compiling with <code class="computeroutput"><span class="special">-</span><span class="identifier">rdynamic</span></code> flag, without <code class="computeroutput"><span class="special">-</span><span class="identifier">fisibility</span><span class="special">=</span><span class="identifier">hidden</span></code>
-                  or marking a functions as exported produce a better stacktraces.
+                  or marking functions as exported produce a better stacktraces.
                 </p></div>
 </td></tr></tbody>
 </table></div>
@@ -317,6 +317,13 @@
     </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
+          if you wish to switch to more powerful implementation on Clang/MinGW and
+          <span class="bold"><strong>BOOST_STACKTRACE_LINK</strong></span> is defined, you
+          just need link with "<span class="bold"><strong>-lboost_stacktrace_backtrace
+          -ldl -lbacktrace</strong></span>" or "<span class="bold"><strong>-lboost_stacktrace_addr2line
+          -ldl</strong></span>"
+        </li>
+<li class="listitem">
           if you wish to disable backtracing and you use the library in header only
           mode, you just need to define <span class="bold"><strong>BOOST_STACKTRACE_USE_NOOP</strong></span>
           for the whole project
@@ -324,12 +331,6 @@
 <li class="listitem">
           if you wish to disable backtracing and <span class="bold"><strong>BOOST_STACKTRACE_LINK</strong></span>
           is defined, you just need link with <span class="bold"><strong>-lboost_stacktrace_noop</strong></span>
-        </li>
-<li class="listitem">
-          if you wish to switch to more powerful implementation on Clang and <span class="bold"><strong>BOOST_STACKTRACE_LINK</strong></span> is defined, you just need
-          link with "<span class="bold"><strong>-lboost_stacktrace_backtrace -ldl
-          -lbacktrace</strong></span>" or "<span class="bold"><strong>-lboost_stacktrace_addr2line
-          -ldl</strong></span>"
         </li>
 </ul></div>
 </div>

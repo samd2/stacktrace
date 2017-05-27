@@ -24,31 +24,30 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
-<a name="boost_stacktrace.getting_started"></a><a class="link" href="getting_started.html" title="Getting Started">Getting Started</a>
+<a name="stacktrace.getting_started"></a><a class="link" href="getting_started.html" title="Getting Started">Getting Started</a>
 </h2></div></div></div>
 <div class="toc"><dl>
-<dt><span class="section"><a href="getting_started.html#boost_stacktrace.getting_started.how_to_print_current_call_stack">How
+<dt><span class="section"><a href="getting_started.html#stacktrace.getting_started.how_to_print_current_call_stack">How
       to print current call stack</a></span></dt>
-<dt><span class="section"><a href="getting_started.html#boost_stacktrace.getting_started.handle_terminates_aborts_and_seg">Handle
+<dt><span class="section"><a href="getting_started.html#stacktrace.getting_started.handle_terminates_aborts_and_seg">Handle
       terminates, aborts and Segmentation Faults</a></span></dt>
-<dt><span class="section"><a href="getting_started.html#boost_stacktrace.getting_started.better_asserts">Better
-      asserts</a></span></dt>
-<dt><span class="section"><a href="getting_started.html#boost_stacktrace.getting_started.exceptions_with_stacktrace">Exceptions
+<dt><span class="section"><a href="getting_started.html#stacktrace.getting_started.better_asserts">Better asserts</a></span></dt>
+<dt><span class="section"><a href="getting_started.html#stacktrace.getting_started.exceptions_with_stacktrace">Exceptions
       with stacktrace</a></span></dt>
-<dt><span class="section"><a href="getting_started.html#boost_stacktrace.getting_started.enabling_and_disabling_stacktrac">Enabling
+<dt><span class="section"><a href="getting_started.html#stacktrace.getting_started.enabling_and_disabling_stacktrac">Enabling
       and disabling stacktraces</a></span></dt>
-<dt><span class="section"><a href="getting_started.html#boost_stacktrace.getting_started.saving_stacktraces_by_specified_">Saving
+<dt><span class="section"><a href="getting_started.html#stacktrace.getting_started.saving_stacktraces_by_specified_">Saving
       stacktraces by specified format</a></span></dt>
-<dt><span class="section"><a href="getting_started.html#boost_stacktrace.getting_started.getting_function_information_fro">Getting
+<dt><span class="section"><a href="getting_started.html#stacktrace.getting_started.getting_function_information_fro">Getting
       function information from pointer</a></span></dt>
-<dt><span class="section"><a href="getting_started.html#boost_stacktrace.getting_started.global_control_over_stacktrace_o">Global
+<dt><span class="section"><a href="getting_started.html#stacktrace.getting_started.global_control_over_stacktrace_o">Global
       control over stacktrace output format</a></span></dt>
-<dt><span class="section"><a href="getting_started.html#boost_stacktrace.getting_started.store_stacktraces_into_shared_me">Store
+<dt><span class="section"><a href="getting_started.html#stacktrace.getting_started.store_stacktraces_into_shared_me">Store
       stacktraces into shared memory</a></span></dt>
 </dl></div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="boost_stacktrace.getting_started.how_to_print_current_call_stack"></a><a class="link" href="getting_started.html#boost_stacktrace.getting_started.how_to_print_current_call_stack" title="How to print current call stack">How
+<a name="stacktrace.getting_started.how_to_print_current_call_stack"></a><a class="link" href="getting_started.html#stacktrace.getting_started.how_to_print_current_call_stack" title="How to print current call stack">How
       to print current call stack</a>
 </h3></div></div></div>
 <p>
@@ -102,7 +101,7 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="boost_stacktrace.getting_started.handle_terminates_aborts_and_seg"></a><a class="link" href="getting_started.html#boost_stacktrace.getting_started.handle_terminates_aborts_and_seg" title="Handle terminates, aborts and Segmentation Faults">Handle
+<a name="stacktrace.getting_started.handle_terminates_aborts_and_seg"></a><a class="link" href="getting_started.html#stacktrace.getting_started.handle_terminates_aborts_and_seg" title="Handle terminates, aborts and Segmentation Faults">Handle
       terminates, aborts and Segmentation Faults</a>
 </h3></div></div></div>
 <p>
@@ -131,14 +130,13 @@
 <p>
         Let's write a handler to safely dump stacktrace:
       </p>
-<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">signal</span><span class="special">.</span><span class="identifier">h</span><span class="special">&gt;</span>     <span class="comment">// ::signal</span>
-<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">cstdlib</span><span class="special">&gt;</span>      <span class="comment">// std::_Exit</span>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">signal</span><span class="special">.</span><span class="identifier">h</span><span class="special">&gt;</span>     <span class="comment">// ::signal, ::raise</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">stacktrace</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 
 <span class="keyword">void</span> <span class="identifier">my_signal_handler</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">signum</span><span class="special">)</span> <span class="special">{</span>
     <span class="special">::</span><span class="identifier">signal</span><span class="special">(</span><span class="identifier">signum</span><span class="special">,</span> <span class="identifier">SIG_DFL</span><span class="special">);</span>
     <span class="identifier">boost</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">::</span><span class="identifier">safe_dump_to</span><span class="special">(</span><span class="string">"./backtrace.dump"</span><span class="special">);</span>
-    <span class="identifier">std</span><span class="special">::</span><span class="identifier">_Exit</span><span class="special">(-</span><span class="number">1</span><span class="special">);</span>
+    <span class="special">::</span><span class="identifier">raise</span><span class="special">(</span><span class="identifier">SIGABRT</span><span class="special">);</span>
 <span class="special">}</span>
 </pre>
 <p>
@@ -197,8 +195,7 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="boost_stacktrace.getting_started.better_asserts"></a><a class="link" href="getting_started.html#boost_stacktrace.getting_started.better_asserts" title="Better asserts">Better
-      asserts</a>
+<a name="stacktrace.getting_started.better_asserts"></a><a class="link" href="getting_started.html#stacktrace.getting_started.better_asserts" title="Better asserts">Better asserts</a>
 </h3></div></div></div>
 <p>
         Pretty often assertions provide not enough information to locate the problem.
@@ -218,7 +215,7 @@
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">stacktrace</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 
 <span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
-    <span class="keyword">inline</span> <span class="keyword">void</span> <span class="identifier">assertion_failed_msg</span><span class="special">(</span><span class="keyword">char</span> <span class="keyword">const</span><span class="special">*</span> <span class="identifier">expr</span><span class="special">,</span> <span class="keyword">char</span> <span class="keyword">const</span><span class="special">*</span> <span class="identifier">msg</span><span class="special">,</span> <span class="keyword">char</span> <span class="keyword">const</span><span class="special">*</span> <span class="identifier">function</span><span class="special">,</span> <span class="keyword">char</span> <span class="keyword">const</span><span class="special">*</span> <span class="identifier">file</span><span class="special">,</span> <span class="keyword">long</span> <span class="identifier">line</span><span class="special">)</span> <span class="special">{</span>
+    <span class="keyword">inline</span> <span class="keyword">void</span> <span class="identifier">assertion_failed_msg</span><span class="special">(</span><span class="keyword">char</span> <span class="keyword">const</span><span class="special">*</span> <span class="identifier">expr</span><span class="special">,</span> <span class="keyword">char</span> <span class="keyword">const</span><span class="special">*</span> <span class="identifier">msg</span><span class="special">,</span> <span class="keyword">char</span> <span class="keyword">const</span><span class="special">*</span> <span class="identifier">function</span><span class="special">,</span> <span class="keyword">char</span> <span class="keyword">const</span><span class="special">*</span> <span class="comment">/*file*/</span><span class="special">,</span> <span class="keyword">long</span> <span class="comment">/*line*/</span><span class="special">)</span> <span class="special">{</span>
         <span class="identifier">std</span><span class="special">::</span><span class="identifier">cerr</span> <span class="special">&lt;&lt;</span> <span class="string">"Expression '"</span> <span class="special">&lt;&lt;</span> <span class="identifier">expr</span> <span class="special">&lt;&lt;</span> <span class="string">"' is false in function '"</span> <span class="special">&lt;&lt;</span> <span class="identifier">function</span> <span class="special">&lt;&lt;</span> <span class="string">"': "</span> <span class="special">&lt;&lt;</span> <span class="special">(</span><span class="identifier">msg</span> <span class="special">?</span> <span class="identifier">msg</span> <span class="special">:</span> <span class="string">"&lt;...&gt;"</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="string">".\n"</span>
             <span class="special">&lt;&lt;</span> <span class="string">"Backtrace:\n"</span> <span class="special">&lt;&lt;</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">()</span> <span class="special">&lt;&lt;</span> <span class="char">'\n'</span><span class="special">;</span>
         <span class="identifier">std</span><span class="special">::</span><span class="identifier">abort</span><span class="special">();</span>
@@ -257,7 +254,7 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="boost_stacktrace.getting_started.exceptions_with_stacktrace"></a><a class="link" href="getting_started.html#boost_stacktrace.getting_started.exceptions_with_stacktrace" title="Exceptions with stacktrace">Exceptions
+<a name="stacktrace.getting_started.exceptions_with_stacktrace"></a><a class="link" href="getting_started.html#stacktrace.getting_started.exceptions_with_stacktrace" title="Exceptions with stacktrace">Exceptions
       with stacktrace</a>
 </h3></div></div></div>
 <p>
@@ -321,7 +318,7 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="boost_stacktrace.getting_started.enabling_and_disabling_stacktrac"></a><a class="link" href="getting_started.html#boost_stacktrace.getting_started.enabling_and_disabling_stacktrac" title="Enabling and disabling stacktraces">Enabling
+<a name="stacktrace.getting_started.enabling_and_disabling_stacktrac"></a><a class="link" href="getting_started.html#stacktrace.getting_started.enabling_and_disabling_stacktrac" title="Enabling and disabling stacktraces">Enabling
       and disabling stacktraces</a>
 </h3></div></div></div>
 <p>
@@ -349,7 +346,7 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="boost_stacktrace.getting_started.saving_stacktraces_by_specified_"></a><a class="link" href="getting_started.html#boost_stacktrace.getting_started.saving_stacktraces_by_specified_" title="Saving stacktraces by specified format">Saving
+<a name="stacktrace.getting_started.saving_stacktraces_by_specified_"></a><a class="link" href="getting_started.html#stacktrace.getting_started.saving_stacktraces_by_specified_" title="Saving stacktraces by specified format">Saving
       stacktraces by specified format</a>
 </h3></div></div></div>
 <p>
@@ -379,7 +376,7 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="boost_stacktrace.getting_started.getting_function_information_fro"></a><a class="link" href="getting_started.html#boost_stacktrace.getting_started.getting_function_information_fro" title="Getting function information from pointer">Getting
+<a name="stacktrace.getting_started.getting_function_information_fro"></a><a class="link" href="getting_started.html#stacktrace.getting_started.getting_function_information_fro" title="Getting function information from pointer">Getting
       function information from pointer</a>
 </h3></div></div></div>
 <p>
@@ -393,8 +390,10 @@
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">cstdlib</span><span class="special">&gt;</span>      <span class="comment">// std::exit</span>
 
 <span class="keyword">void</span> <span class="identifier">print_signal_handler_and_exit</span><span class="special">()</span> <span class="special">{</span>
-    <span class="keyword">void</span><span class="special">*</span> <span class="identifier">p</span> <span class="special">=</span> <span class="keyword">reinterpret_cast</span><span class="special">&lt;</span><span class="keyword">void</span><span class="special">*&gt;(::</span><span class="identifier">signal</span><span class="special">(</span><span class="identifier">SIGSEGV</span><span class="special">,</span> <span class="identifier">SIG_DFL</span><span class="special">));</span>
-    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">::</span><span class="identifier">frame</span> <span class="identifier">f</span><span class="special">(</span><span class="identifier">p</span><span class="special">);</span>
+    <span class="keyword">typedef</span> <span class="keyword">void</span><span class="special">(*</span><span class="identifier">function_t</span><span class="special">)(</span><span class="keyword">int</span><span class="special">);</span>
+
+    <span class="identifier">function_t</span> <span class="identifier">old_signal_function</span> <span class="special">=</span> <span class="special">::</span><span class="identifier">signal</span><span class="special">(</span><span class="identifier">SIGSEGV</span><span class="special">,</span> <span class="identifier">SIG_DFL</span><span class="special">);</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">::</span><span class="identifier">frame</span> <span class="identifier">f</span><span class="special">(</span><span class="identifier">old_signal_function</span><span class="special">);</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">f</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">exit</span><span class="special">(</span><span class="number">0</span><span class="special">);</span>
 <span class="special">}</span>
@@ -407,7 +406,7 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="boost_stacktrace.getting_started.global_control_over_stacktrace_o"></a><a class="link" href="getting_started.html#boost_stacktrace.getting_started.global_control_over_stacktrace_o" title="Global control over stacktrace output format">Global
+<a name="stacktrace.getting_started.global_control_over_stacktrace_o"></a><a class="link" href="getting_started.html#stacktrace.getting_started.global_control_over_stacktrace_o" title="Global control over stacktrace output format">Global
       control over stacktrace output format</a>
 </h3></div></div></div>
 <p>
@@ -471,16 +470,16 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="boost_stacktrace.getting_started.store_stacktraces_into_shared_me"></a><a class="link" href="getting_started.html#boost_stacktrace.getting_started.store_stacktraces_into_shared_me" title="Store stacktraces into shared memory">Store
+<a name="stacktrace.getting_started.store_stacktraces_into_shared_me"></a><a class="link" href="getting_started.html#stacktrace.getting_started.store_stacktraces_into_shared_me" title="Store stacktraces into shared memory">Store
       stacktraces into shared memory</a>
 </h3></div></div></div>
 <p>
         There's a way to serialize stacktrace in async safe manner and share that
-        serialized representation with another preocess. Here's another example with
+        serialized representation with another process. Here's another example with
         signal handlers.
       </p>
 <p>
-        This example is very close to the <a class="link" href="getting_started.html#boost_stacktrace.getting_started.handle_terminates_aborts_and_seg" title="Handle terminates, aborts and Segmentation Faults">"Handle
+        This example is very close to the <a class="link" href="getting_started.html#stacktrace.getting_started.handle_terminates_aborts_and_seg" title="Handle terminates, aborts and Segmentation Faults">"Handle
         terminates, aborts and Segmentation Faults"</a>, but this time we
         are dumping stacktrace into shared memory:
       </p>
@@ -494,23 +493,24 @@
 
 <span class="keyword">void</span> <span class="identifier">my_signal_handler2</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">signum</span><span class="special">)</span> <span class="special">{</span>
     <span class="special">::</span><span class="identifier">signal</span><span class="special">(</span><span class="identifier">signum</span><span class="special">,</span> <span class="identifier">SIG_DFL</span><span class="special">);</span>
-    <span class="keyword">bool</span><span class="special">*</span> <span class="identifier">b</span> <span class="special">=</span> <span class="keyword">static_cast</span><span class="special">&lt;</span><span class="keyword">bool</span><span class="special">*&gt;(</span><span class="identifier">g_region</span><span class="special">.</span><span class="identifier">get_address</span><span class="special">());</span>
-    <span class="special">*</span><span class="identifier">b</span> <span class="special">=</span> <span class="keyword">true</span><span class="special">;</span>                                  <span class="comment">// flag that memory constains stacktrace</span>
-    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">::</span><span class="identifier">safe_dump_to</span><span class="special">(</span><span class="identifier">b</span> <span class="special">+</span> <span class="number">1</span><span class="special">,</span> <span class="identifier">g_region</span><span class="special">.</span><span class="identifier">get_size</span><span class="special">()</span> <span class="special">-</span> <span class="keyword">sizeof</span><span class="special">(</span><span class="keyword">bool</span><span class="special">));</span>
-    <span class="identifier">std</span><span class="special">::</span><span class="identifier">_Exit</span><span class="special">(-</span><span class="number">1</span><span class="special">);</span>
+    <span class="keyword">void</span><span class="special">**</span> <span class="identifier">f</span> <span class="special">=</span> <span class="keyword">static_cast</span><span class="special">&lt;</span><span class="keyword">void</span><span class="special">**&gt;(</span><span class="identifier">g_region</span><span class="special">.</span><span class="identifier">get_address</span><span class="special">());</span>
+    <span class="special">*</span><span class="identifier">f</span> <span class="special">=</span> <span class="keyword">reinterpret_cast</span><span class="special">&lt;</span><span class="keyword">void</span><span class="special">*&gt;(</span><span class="number">1</span><span class="special">);</span>                      <span class="comment">// Setting flag that shared memory now constains stacktrace.</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">::</span><span class="identifier">safe_dump_to</span><span class="special">(</span><span class="identifier">f</span> <span class="special">+</span> <span class="number">1</span><span class="special">,</span> <span class="identifier">g_region</span><span class="special">.</span><span class="identifier">get_size</span><span class="special">()</span> <span class="special">-</span> <span class="keyword">sizeof</span><span class="special">(</span><span class="keyword">void</span><span class="special">*));</span>
+
+    <span class="special">::</span><span class="identifier">raise</span><span class="special">(</span><span class="identifier">SIGABRT</span><span class="special">);</span>
 <span class="special">}</span>
 </pre>
 <p>
-        After registring signal handlers and catching a signal, we may print stacktrace
+        After registering signal handlers and catching a signal, we may print stacktrace
         dumps on program restart:
       </p>
-<pre class="programlisting"><span class="keyword">bool</span><span class="special">*</span> <span class="identifier">b</span> <span class="special">=</span> <span class="keyword">static_cast</span><span class="special">&lt;</span><span class="keyword">bool</span><span class="special">*&gt;(</span><span class="identifier">g_region</span><span class="special">.</span><span class="identifier">get_address</span><span class="special">());</span>   <span class="comment">// getting flag that memory constains stacktrace</span>
-<span class="keyword">if</span> <span class="special">(*</span><span class="identifier">b</span><span class="special">)</span> <span class="special">{</span>                                               <span class="comment">// checking that memory constains stacktrace</span>
+<pre class="programlisting"><span class="keyword">void</span><span class="special">**</span> <span class="identifier">f</span> <span class="special">=</span> <span class="keyword">static_cast</span><span class="special">&lt;</span><span class="keyword">void</span><span class="special">**&gt;(</span><span class="identifier">g_region</span><span class="special">.</span><span class="identifier">get_address</span><span class="special">());</span>
+<span class="keyword">if</span> <span class="special">(*</span><span class="identifier">f</span><span class="special">)</span> <span class="special">{</span>                                                 <span class="comment">// Checking if memory constains stacktrace.</span>
     <span class="identifier">boost</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">::</span><span class="identifier">stacktrace</span> <span class="identifier">st</span>
-        <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">::</span><span class="identifier">from_dump</span><span class="special">(</span><span class="identifier">b</span> <span class="special">+</span> <span class="number">1</span><span class="special">,</span> <span class="identifier">g_region</span><span class="special">.</span><span class="identifier">get_size</span><span class="special">()</span> <span class="special">-</span> <span class="keyword">sizeof</span><span class="special">(</span><span class="keyword">bool</span><span class="special">));</span>
+        <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">::</span><span class="identifier">from_dump</span><span class="special">(</span><span class="identifier">f</span> <span class="special">+</span> <span class="number">1</span><span class="special">,</span> <span class="identifier">g_region</span><span class="special">.</span><span class="identifier">get_size</span><span class="special">()</span> <span class="special">-</span> <span class="keyword">sizeof</span><span class="special">(</span><span class="keyword">bool</span><span class="special">));</span>
 
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Previous run crashed and left trace in shared memory:\n"</span> <span class="special">&lt;&lt;</span> <span class="identifier">st</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
-    <span class="special">*</span><span class="identifier">b</span> <span class="special">=</span> <span class="keyword">false</span><span class="special">;</span>
+    <span class="special">*</span><span class="identifier">f</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
 <span class="special">}</span>
 </pre>
 <p>

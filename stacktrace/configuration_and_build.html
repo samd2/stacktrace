@@ -24,8 +24,7 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
-<a name="boost_stacktrace.configuration_and_build"></a><a class="link" href="configuration_and_build.html" title="Configuration and Build">Configuration
-    and Build</a>
+<a name="stacktrace.configuration_and_build"></a><a class="link" href="configuration_and_build.html" title="Configuration and Build">Configuration and Build</a>
 </h2></div></div></div>
 <p>
       By default Boost.Stacktrace is a header-only library, but you may change that
@@ -33,7 +32,7 @@
       without recompiling your project:
     </p>
 <div class="table">
-<a name="boost_stacktrace.configuration_and_build.linkmacro"></a><p class="title"><b>Table&#160;1.1.&#160;Link macros</b></p>
+<a name="stacktrace.configuration_and_build.linkmacro"></a><p class="title"><b>Table&#160;1.1.&#160;Link macros</b></p>
 <div class="table-contents"><table class="table" summary="Link macros">
 <colgroup>
 <col>
@@ -87,7 +86,7 @@
       from above is defined, you have to manually link with one of the libraries:
     </p>
 <div class="table">
-<a name="boost_stacktrace.configuration_and_build.libconfig"></a><p class="title"><b>Table&#160;1.2.&#160;Config</b></p>
+<a name="stacktrace.configuration_and_build.libconfig"></a><p class="title"><b>Table&#160;1.2.&#160;Config</b></p>
 <div class="table-contents"><table class="table" summary="Config">
 <colgroup>
 <col>
@@ -120,12 +119,12 @@
             </th>
 <th>
               <p>
-                Uses debug information <sup>[<a name="boost_stacktrace.configuration_and_build.f0" href="#ftn.boost_stacktrace.configuration_and_build.f0" class="footnote">a</a>]</sup>
+                Uses debug information <sup>[<a name="stacktrace.configuration_and_build.f0" href="#ftn.stacktrace.configuration_and_build.f0" class="footnote">a</a>]</sup>
               </p>
             </th>
 <th>
               <p>
-                Uses dynamic exports information <sup>[<a name="boost_stacktrace.configuration_and_build.f1" href="#ftn.boost_stacktrace.configuration_and_build.f1" class="footnote">b</a>]</sup>
+                Uses dynamic exports information <sup>[<a name="stacktrace.configuration_and_build.f1" href="#ftn.stacktrace.configuration_and_build.f1" class="footnote">b</a>]</sup>
               </p>
             </th>
 </tr></thead>
@@ -158,7 +157,7 @@
             </td>
 <td>
               <p>
-                yes
+                no
               </p>
             </td>
 </tr>
@@ -210,7 +209,7 @@
               <p>
                 Uses COM to show debug info and caches COM instances in TLS for better
                 performance. Useful only for cases when traces are gathered very
-                often.
+                often. <sup>[<a name="stacktrace.configuration_and_build.f2" href="#ftn.stacktrace.configuration_and_build.f2" class="footnote">c</a>]</sup>
               </p>
             </td>
 <td>
@@ -225,7 +224,7 @@
             </td>
 <td>
               <p>
-                yes
+                no
               </p>
             </td>
 </tr>
@@ -244,9 +243,13 @@
               <p>
                 Requires linking with <span class="bold"><strong>libdl</strong></span> on POSIX
                 and <span class="bold"><strong>libbacktrace</strong></span> libraries. <span class="bold"><strong>libbacktrace</strong></span> is probably already installed
-                in your system, or built into your compiler. Otherwise it can be
-                downloaded <a href="https://github.com/gcc-mirror/gcc/tree/master/libbacktrace" target="_top">from
-                here</a>
+                in your system, or built into your compiler.
+              </p>
+              <p>
+                Otherwise (if you are a <span class="bold"><strong>MinGW</strong></span> user
+                for example) it can be downloaded <a href="https://github.com/ianlancetaylor/libbacktrace" target="_top">from
+                here</a> or <a href="https://github.com/gcc-mirror/gcc/tree/master/libbacktrace" target="_top">from
+                here</a>.
               </p>
             </td>
 <td>
@@ -280,7 +283,10 @@
               <p>
                 Use <span class="bold"><strong>addr2line</strong></span> program to retrieve
                 stacktrace. Requires linking with <span class="bold"><strong>libdl</strong></span>
-                library and calls <code class="computeroutput"><span class="special">::</span><span class="identifier">fork</span></code>.
+                library and <code class="computeroutput"><span class="special">::</span><span class="identifier">fork</span></code>
+                system call. Macro <span class="bold"><strong>BOOST_STACKTRACE_ADDR2LINE_LOCATION</strong></span>
+                must be defined to the absolute path to the addr2line executable
+                if it is not located in /usr/bin/addr2line.
               </p>
             </td>
 <td>
@@ -334,14 +340,20 @@
 </tr>
 </tbody>
 <tbody class="footnotes"><tr><td colspan="6">
-<div class="footnote"><p><sup>[<a name="ftn.boost_stacktrace.configuration_and_build.f0" href="#boost_stacktrace.configuration_and_build.f0" class="para">a</a>] </sup>
+<div class="footnote"><p><sup>[<a name="ftn.stacktrace.configuration_and_build.f0" href="#stacktrace.configuration_and_build.f0" class="para">a</a>] </sup>
                   This will provide more readable backtraces with <span class="bold"><strong>source
                   code locations</strong></span> if the binary is built with debug information.
                 </p></div>
-<div class="footnote"><p><sup>[<a name="ftn.boost_stacktrace.configuration_and_build.f1" href="#boost_stacktrace.configuration_and_build.f1" class="para">b</a>] </sup>
+<div class="footnote"><p><sup>[<a name="ftn.stacktrace.configuration_and_build.f1" href="#stacktrace.configuration_and_build.f1" class="para">b</a>] </sup>
                   This will provide readable function names in backtrace for functions
                   that are exported by the binary. Compiling with <code class="computeroutput"><span class="special">-</span><span class="identifier">rdynamic</span></code> flag, without <code class="computeroutput"><span class="special">-</span><span class="identifier">fisibility</span><span class="special">=</span><span class="identifier">hidden</span></code>
                   or marking functions as exported produce a better stacktraces.
+                </p></div>
+<div class="footnote"><p><sup>[<a name="ftn.stacktrace.configuration_and_build.f2" href="#stacktrace.configuration_and_build.f2" class="para">c</a>] </sup>
+                  This may affect other components of your program that use COM,
+                  because this mode calls the <code class="computeroutput"><span class="identifier">CoInitializeEx</span><span class="special">(</span><span class="number">0</span><span class="special">,</span> <span class="identifier">COINIT_MULTITHREADED</span><span class="special">)</span></code> on first use and does not call
+                  <code class="computeroutput"><span class="special">::</span><span class="identifier">CoUninitialize</span><span class="special">();</span></code> until the current thread is
+                  destroyed.
                 </p></div>
 </td></tr></tbody>
 </table></div>

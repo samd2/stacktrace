@@ -42,8 +42,6 @@
       function information from pointer</a></span></dt>
 <dt><span class="section"><a href="getting_started.html#stacktrace.getting_started.global_control_over_stacktrace_o">Global
       control over stacktrace output format</a></span></dt>
-<dt><span class="section"><a href="getting_started.html#stacktrace.getting_started.store_stacktraces_into_shared_me">Store
-      stacktraces into shared memory</a></span></dt>
 </dl></div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
@@ -123,8 +121,8 @@
           Writing a signal handler requires high attention! Only a few system calls
           allowed in signal handlers, so there's no cross platform way to print a
           stacktrace without a risk of deadlocking. The only way to deal with the
-          problem - <span class="bold"><strong>dump raw stacktrace into file/socket/shared
-          memory and parse it on program restart</strong></span>.
+          problem - <span class="bold"><strong>dump raw stacktrace into file/socket and
+          parse it on program restart</strong></span>.
         </p></td></tr>
 </table></div>
 <p>
@@ -466,73 +464,6 @@
  <span class="number">1</span><span class="special">#</span> <span class="identifier">foo</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span>
  <span class="number">2</span><span class="special">#</span> <span class="identifier">bar</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span>
  <span class="number">3</span><span class="special">#</span> <span class="identifier">foo</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span>
-</pre>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h3 class="title">
-<a name="stacktrace.getting_started.store_stacktraces_into_shared_me"></a><a class="link" href="getting_started.html#stacktrace.getting_started.store_stacktraces_into_shared_me" title="Store stacktraces into shared memory">Store
-      stacktraces into shared memory</a>
-</h3></div></div></div>
-<p>
-        There's a way to serialize stacktrace in async safe manner and share that
-        serialized representation with another process. Here's another example with
-        signal handlers.
-      </p>
-<p>
-        This example is very close to the <a class="link" href="getting_started.html#stacktrace.getting_started.handle_terminates_aborts_and_seg" title="Handle terminates, aborts and Segmentation Faults">"Handle
-        terminates, aborts and Segmentation Faults"</a>, but this time we
-        are dumping stacktrace into shared memory:
-      </p>
-<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">stacktrace</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
-<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">interprocess</span><span class="special">/</span><span class="identifier">shared_memory_object</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
-<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">interprocess</span><span class="special">/</span><span class="identifier">mapped_region</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
-
-<span class="identifier">boost</span><span class="special">::</span><span class="identifier">interprocess</span><span class="special">::</span><span class="identifier">shared_memory_object</span> <span class="identifier">g_shm</span><span class="special">;</span> <span class="comment">// inited at program start</span>
-<span class="identifier">boost</span><span class="special">::</span><span class="identifier">interprocess</span><span class="special">::</span><span class="identifier">mapped_region</span> <span class="identifier">g_region</span><span class="special">;</span>     <span class="comment">// inited at program start</span>
-
-
-<span class="keyword">void</span> <span class="identifier">my_signal_handler2</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">signum</span><span class="special">)</span> <span class="special">{</span>
-    <span class="special">::</span><span class="identifier">signal</span><span class="special">(</span><span class="identifier">signum</span><span class="special">,</span> <span class="identifier">SIG_DFL</span><span class="special">);</span>
-    <span class="keyword">void</span><span class="special">**</span> <span class="identifier">f</span> <span class="special">=</span> <span class="keyword">static_cast</span><span class="special">&lt;</span><span class="keyword">void</span><span class="special">**&gt;(</span><span class="identifier">g_region</span><span class="special">.</span><span class="identifier">get_address</span><span class="special">());</span>
-    <span class="special">*</span><span class="identifier">f</span> <span class="special">=</span> <span class="keyword">reinterpret_cast</span><span class="special">&lt;</span><span class="keyword">void</span><span class="special">*&gt;(</span><span class="number">1</span><span class="special">);</span>                      <span class="comment">// Setting flag that shared memory now constains stacktrace.</span>
-    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">::</span><span class="identifier">safe_dump_to</span><span class="special">(</span><span class="identifier">f</span> <span class="special">+</span> <span class="number">1</span><span class="special">,</span> <span class="identifier">g_region</span><span class="special">.</span><span class="identifier">get_size</span><span class="special">()</span> <span class="special">-</span> <span class="keyword">sizeof</span><span class="special">(</span><span class="keyword">void</span><span class="special">*));</span>
-
-    <span class="special">::</span><span class="identifier">raise</span><span class="special">(</span><span class="identifier">SIGABRT</span><span class="special">);</span>
-<span class="special">}</span>
-</pre>
-<p>
-        After registering signal handlers and catching a signal, we may print stacktrace
-        dumps on program restart:
-      </p>
-<pre class="programlisting"><span class="keyword">void</span><span class="special">**</span> <span class="identifier">f</span> <span class="special">=</span> <span class="keyword">static_cast</span><span class="special">&lt;</span><span class="keyword">void</span><span class="special">**&gt;(</span><span class="identifier">g_region</span><span class="special">.</span><span class="identifier">get_address</span><span class="special">());</span>
-<span class="keyword">if</span> <span class="special">(*</span><span class="identifier">f</span><span class="special">)</span> <span class="special">{</span>                                                 <span class="comment">// Checking if memory constains stacktrace.</span>
-    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">::</span><span class="identifier">stacktrace</span> <span class="identifier">st</span>
-        <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">::</span><span class="identifier">from_dump</span><span class="special">(</span><span class="identifier">f</span> <span class="special">+</span> <span class="number">1</span><span class="special">,</span> <span class="identifier">g_region</span><span class="special">.</span><span class="identifier">get_size</span><span class="special">()</span> <span class="special">-</span> <span class="keyword">sizeof</span><span class="special">(</span><span class="keyword">bool</span><span class="special">));</span>
-
-    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Previous run crashed and left trace in shared memory:\n"</span> <span class="special">&lt;&lt;</span> <span class="identifier">st</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
-    <span class="special">*</span><span class="identifier">f</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
-<span class="special">}</span>
-</pre>
-<p>
-        The program output will be the following:
-      </p>
-<pre class="programlisting"><span class="identifier">Previous</span> <span class="identifier">run</span> <span class="identifier">crashed</span> <span class="keyword">and</span> <span class="identifier">left</span> <span class="identifier">trace</span> <span class="identifier">in</span> <span class="identifier">shared</span> <span class="identifier">memory</span><span class="special">:</span>
- <span class="number">0</span><span class="special">#</span> <span class="number">0</span><span class="identifier">x00007FD51C7218EF</span>
- <span class="number">1</span><span class="special">#</span> <span class="identifier">my_signal_handler2</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="identifier">at</span> <span class="special">../</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">terminate_handler</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">68</span>
- <span class="number">2</span><span class="special">#</span> <span class="number">0</span><span class="identifier">x00007FD51B833CB0</span>
- <span class="number">3</span><span class="special">#</span> <span class="number">0</span><span class="identifier">x00007FD51B833C37</span>
- <span class="number">4</span><span class="special">#</span> <span class="number">0</span><span class="identifier">x00007FD51B837028</span>
- <span class="number">5</span><span class="special">#</span> <span class="number">0</span><span class="identifier">x00007FD51BE44BBD</span>
- <span class="number">6</span><span class="special">#</span> <span class="number">0</span><span class="identifier">x00007FD51BE42B96</span>
- <span class="number">7</span><span class="special">#</span> <span class="number">0</span><span class="identifier">x00007FD51BE42BE1</span>
- <span class="number">8</span><span class="special">#</span> <span class="identifier">bar</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="identifier">at</span> <span class="special">../</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">terminate_handler</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">18</span>
- <span class="number">9</span><span class="special">#</span> <span class="identifier">foo</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="identifier">at</span> <span class="special">../</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">terminate_handler</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">22</span>
-<span class="number">10</span><span class="special">#</span> <span class="identifier">bar</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="identifier">at</span> <span class="special">../</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">terminate_handler</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">14</span>
-<span class="number">11</span><span class="special">#</span> <span class="identifier">foo</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="identifier">at</span> <span class="special">../</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">terminate_handler</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">22</span>
-<span class="number">12</span><span class="special">#</span> <span class="identifier">run_3</span><span class="special">(</span><span class="keyword">char</span> <span class="keyword">const</span><span class="special">**)</span> <span class="identifier">at</span> <span class="special">../</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">terminate_handler</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">152</span>
-<span class="number">13</span><span class="special">#</span> <span class="identifier">main</span> <span class="identifier">at</span> <span class="special">../</span><span class="identifier">example</span><span class="special">/</span><span class="identifier">terminate_handler</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">:</span><span class="number">207</span>
-<span class="number">14</span><span class="special">#</span> <span class="number">0</span><span class="identifier">x00007FD51B81EF45</span>
-<span class="number">15</span><span class="special">#</span> <span class="number">0x0000000000402999</span>
 </pre>
 </div>
 </div>

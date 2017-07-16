@@ -49,13 +49,13 @@
       to print current call stack</a>
 </h3></div></div></div>
 <p>
-        <code class="computeroutput"><a class="link" href="../reference.html#boost.stacktrace.stacktrace">boost::stacktrace::stacktrace</a></code>
+        <code class="computeroutput"><a class="link" href="reference.html#boost.stacktrace.stacktrace">boost::stacktrace::stacktrace</a></code>
         contains methods for working with call-stack/backtraces/stacktraces. Here's
         a small example:
       </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">stacktrace</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 
-<span class="comment">// ... somewere inside the `bar(int)` function that is called recursively:</span>
+<span class="comment">// ... somewhere inside the `bar(int)` function that is called recursively:</span>
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">();</span>
 </pre>
 <p>
@@ -68,7 +68,7 @@
             stacktraces
           </li>
 <li class="listitem">
-            <code class="computeroutput"><a class="link" href="../reference.html#boost.stacktrace.stacktrace">stacktrace()</a></code>
+            <code class="computeroutput"><a class="link" href="reference.html#boost.stacktrace.stacktrace">stacktrace()</a></code>
             is the default constructor call; constructor stores the current function
             call sequence inside the stacktrace class.
           </li>
@@ -231,7 +231,7 @@
         call our functions <code class="computeroutput"><span class="identifier">assertion_failed</span></code>
         and <code class="computeroutput"><span class="identifier">assertion_failed_msg</span></code>
         in case of failure. In <code class="computeroutput"><span class="identifier">assertion_failed_msg</span></code>
-        we output information that was provided by the assertion macro and <code class="computeroutput"><a class="link" href="../reference.html#boost.stacktrace.stacktrace">boost::stacktrace::stacktrace</a></code>:
+        we output information that was provided by the assertion macro and <code class="computeroutput"><a class="link" href="reference.html#boost.stacktrace.stacktrace">boost::stacktrace::stacktrace</a></code>:
       </p>
 <pre class="programlisting"><span class="identifier">Expression</span> <span class="char">'i &lt; N'</span> <span class="identifier">is</span> <span class="keyword">false</span> <span class="identifier">in</span> <span class="identifier">function</span> <span class="char">'T&amp; boost::array&lt;T, N&gt;::operator[](boost::array&lt;T, N&gt;::size_type) [with T = int; long unsigned int N = 5ul; boost::array&lt;T, N&gt;::reference = int&amp;; boost::array&lt;T, N&gt;::size_type = long unsigned int]'</span><span class="special">:</span> <span class="identifier">out</span> <span class="identifier">of</span> <span class="identifier">range</span><span class="special">.</span>
 <span class="identifier">Backtrace</span><span class="special">:</span>
@@ -269,7 +269,7 @@
 <span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">error_info</span><span class="special">&lt;</span><span class="keyword">struct</span> <span class="identifier">tag_stacktrace</span><span class="special">,</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">&gt;</span> <span class="identifier">traced</span><span class="special">;</span>
 </pre>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
-            Write a helper class for throwing any exception with stacktrce:
+            Write a helper class for throwing any exception with stacktrace:
           </li></ul></div>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">E</span><span class="special">&gt;</span>
 <span class="keyword">void</span> <span class="identifier">throw_with_trace</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">E</span><span class="special">&amp;</span> <span class="identifier">e</span><span class="special">)</span> <span class="special">{</span>
@@ -321,7 +321,7 @@
 </h3></div></div></div>
 <p>
         At some point arises a requirement to easily enable/disable stacktraces for
-        a whole project. That could be easily achived.
+        a whole project. That could be easily achieved.
       </p>
 <p>
         Just define <span class="bold"><strong>BOOST_STACKTRACE_LINK</strong></span> for a
@@ -348,7 +348,7 @@
       stacktraces by specified format</a>
 </h3></div></div></div>
 <p>
-        <code class="computeroutput"><a class="link" href="../reference.html#boost.stacktrace.stacktrace">boost::stacktrace::stacktrace</a></code>
+        <code class="computeroutput"><a class="link" href="reference.html#boost.stacktrace.stacktrace">boost::stacktrace::stacktrace</a></code>
         provides access to individual <code class="computeroutput"><a class="link" href="../boost/stacktrace/frame.html" title="Class frame">frames</a></code>
         of the stacktrace, so that you could save stacktrace information in your
         own format. Consider the example, that saves only function addresses of each

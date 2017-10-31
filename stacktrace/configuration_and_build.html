@@ -26,6 +26,8 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="stacktrace.configuration_and_build"></a><a class="link" href="configuration_and_build.html" title="Configuration and Build">Configuration and Build</a>
 </h2></div></div></div>
+<div class="toc"><dl><dt><span class="section"><a href="configuration_and_build.html#stacktrace.configuration_and_build.mingw_specific_notes">MinGW
+      specific notes</a></span></dt></dl></div>
 <p>
       By default Boost.Stacktrace is a header-only library, but you may change that
       and use the following macros to improve build times or to be able to tune library
@@ -379,6 +381,61 @@
           is defined, you just need link with <span class="bold"><strong>-lboost_stacktrace_noop</strong></span>
         </li>
 </ul></div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="stacktrace.configuration_and_build.mingw_specific_notes"></a><a class="link" href="configuration_and_build.html#stacktrace.configuration_and_build.mingw_specific_notes" title="MinGW specific notes">MinGW
+      specific notes</a>
+</h3></div></div></div>
+<p>
+        MinGW-w64 users may use the <span class="bold"><strong>BOOST_STACKTRACE_USE_WINDBG</strong></span>
+        and <span class="bold"><strong>BOOST_STACKTRACE_USE_WINDBG_CACHED</strong></span> for
+        getting the best results.
+      </p>
+<p>
+        MinGW (without -w64) users have to install libbacktrace for getting better
+        stacktraces. Follow the instruction:
+      </p>
+<p>
+        Let's assume that you've installed MinGw into C:\MinGW and downloaded <a href="https://github.com/ianlancetaylor/libbacktrace" target="_top">libbacktrace sources</a>
+        into C:\libbacktrace-master
+      </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
+            Configure &amp; build libbacktrace from console:
+            <div class="itemizedlist"><ul class="itemizedlist" type="circle">
+<li class="listitem">
+                  C:\MinGW\msys\1.0\bin\sh.exe
+                </li>
+<li class="listitem">
+                  cd /c/libbacktrace-master
+                </li>
+<li class="listitem">
+                  ./configure CC=/c/MinGW/bin/gcc.exe CXX=/c/MinGW/bin/g++.exe
+                </li>
+<li class="listitem">
+                  make
+                </li>
+<li class="listitem">
+                  ./libtool --mode=install /usr/bin/install -c libbacktrace.la '/c/libbacktrace-master'
+                </li>
+</ul></div>
+          </li>
+<li class="listitem">
+            Add info to the project-config.jam in the Boost folder:
+            <div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+                  using gcc : 6 : "C:\MinGW\bin\g++.exe" : &lt;compileflags&gt;-I"C:\libbacktrace-master\"
+                  &lt;linkflags&gt;-L"C:\libbacktrace-master\" ;
+                </li></ul></div>
+          </li>
+<li class="listitem">
+            Now you can use a header only version by defining <span class="bold"><strong>BOOST_STACKTRACE_USE_BACKTRACE</strong></span>
+            for your project or build the stacktrace library from Boost folder:
+            <div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+                  b2.exe toolset=gcc-6 --with-stacktrace
+                </li></ul></div>
+          </li>
+</ul></div>
+</div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>

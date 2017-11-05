@@ -134,7 +134,8 @@
 <tr>
 <td>
               <p>
-                <span class="emphasis"><em>default for MSVC</em></span> / <span class="bold"><strong>BOOST_STACKTRACE_USE_WINDBG</strong></span>
+                <span class="emphasis"><em>default for MSVC, Intel on Windows, MinGW-w64</em></span>
+                / <span class="bold"><strong>BOOST_STACKTRACE_USE_WINDBG</strong></span>
               </p>
             </td>
 <td>
@@ -144,12 +145,13 @@
             </td>
 <td>
               <p>
-                Uses COM to show debug info.
+                Uses COM to show debug info. May require linking with <span class="bold"><strong>ole32</strong></span>
+                and <span class="bold"><strong>dbgeng</strong></span>.
               </p>
             </td>
 <td>
               <p>
-                Windows
+                MSVC, MinGW-w64, Intel on Windows
               </p>
             </td>
 <td>
@@ -166,7 +168,7 @@
 <tr>
 <td>
               <p>
-                <span class="emphasis"><em>default other platforms</em></span>
+                <span class="emphasis"><em>default for other platforms</em></span>
               </p>
             </td>
 <td>
@@ -182,7 +184,7 @@
             </td>
 <td>
               <p>
-                Not MSVC compiler on POSIX or Windows
+                Any compiler on POSIX or MinGW
               </p>
             </td>
 <td>
@@ -211,12 +213,13 @@
               <p>
                 Uses COM to show debug info and caches COM instances in TLS for better
                 performance. Useful only for cases when traces are gathered very
-                often. <sup>[<a name="stacktrace.configuration_and_build.f2" href="#ftn.stacktrace.configuration_and_build.f2" class="footnote">c</a>]</sup>
+                often. <sup>[<a name="stacktrace.configuration_and_build.f2" href="#ftn.stacktrace.configuration_and_build.f2" class="footnote">c</a>]</sup> May require linking with <span class="bold"><strong>ole32</strong></span>
+                and <span class="bold"><strong>dbgeng</strong></span>.
               </p>
             </td>
 <td>
               <p>
-                Windows
+                MSVC, MinGW-w64, Intel on Windows
               </p>
             </td>
 <td>
@@ -256,7 +259,7 @@
             </td>
 <td>
               <p>
-                GCC/MinGW/Clang... on POSIX or Windows
+                Any compiler on POSIX or MinGW
               </p>
             </td>
 <td>
@@ -293,7 +296,7 @@
             </td>
 <td>
               <p>
-                GCC/MinGW/Clang... on POSIX
+                Any compiler on POSIX
               </p>
             </td>
 <td>

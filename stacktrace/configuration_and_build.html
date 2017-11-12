@@ -26,8 +26,8 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="stacktrace.configuration_and_build"></a><a class="link" href="configuration_and_build.html" title="Configuration and Build">Configuration and Build</a>
 </h2></div></div></div>
-<div class="toc"><dl><dt><span class="section"><a href="configuration_and_build.html#stacktrace.configuration_and_build.mingw_specific_notes">MinGW
-      specific notes</a></span></dt></dl></div>
+<div class="toc"><dl><dt><span class="section"><a href="configuration_and_build.html#stacktrace.configuration_and_build.mingw_and_mingw_w64_specific_not">MinGW
+      and MinGW-w64 specific notes</a></span></dt></dl></div>
 <p>
       By default Boost.Stacktrace is a header-only library, but you may change that
       and use the following macros to improve build times or to be able to tune library
@@ -219,7 +219,7 @@
             </td>
 <td>
               <p>
-                MSVC, MinGW-w64, Intel on Windows
+                MSVC, Intel on Windows
               </p>
             </td>
 <td>
@@ -251,15 +251,15 @@
                 in your system, or built into your compiler.
               </p>
               <p>
-                Otherwise (if you are a <span class="bold"><strong>MinGW</strong></span> user
-                for example) it can be downloaded <a href="https://github.com/ianlancetaylor/libbacktrace" target="_top">from
+                Otherwise (if you are a <span class="bold"><strong>MinGW</strong></span>/<span class="bold"><strong>MinGW-w64</strong></span> user for example) it can be downloaded
+                <a href="https://github.com/ianlancetaylor/libbacktrace" target="_top">from
                 here</a> or <a href="https://github.com/gcc-mirror/gcc/tree/master/libbacktrace" target="_top">from
                 here</a>.
               </p>
             </td>
 <td>
               <p>
-                Any compiler on POSIX or MinGW
+                Any compiler on POSIX, or MinGW, or MinGW-w64
               </p>
             </td>
 <td>
@@ -386,20 +386,15 @@
 </ul></div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="stacktrace.configuration_and_build.mingw_specific_notes"></a><a class="link" href="configuration_and_build.html#stacktrace.configuration_and_build.mingw_specific_notes" title="MinGW specific notes">MinGW
-      specific notes</a>
+<a name="stacktrace.configuration_and_build.mingw_and_mingw_w64_specific_not"></a><a class="link" href="configuration_and_build.html#stacktrace.configuration_and_build.mingw_and_mingw_w64_specific_not" title="MinGW and MinGW-w64 specific notes">MinGW
+      and MinGW-w64 specific notes</a>
 </h3></div></div></div>
 <p>
-        MinGW-w64 users may use the <span class="bold"><strong>BOOST_STACKTRACE_USE_WINDBG</strong></span>
-        and <span class="bold"><strong>BOOST_STACKTRACE_USE_WINDBG_CACHED</strong></span> for
-        getting the best results.
+        MinGW-w64 and MinGW (without -w64) users have to install libbacktrace for
+        getting better stacktraces. Follow the instruction:
       </p>
 <p>
-        MinGW (without -w64) users have to install libbacktrace for getting better
-        stacktraces. Follow the instruction:
-      </p>
-<p>
-        Let's assume that you've installed MinGw into C:\MinGW and downloaded <a href="https://github.com/ianlancetaylor/libbacktrace" target="_top">libbacktrace sources</a>
+        Let's assume that you've installed MinGW into C:\MinGW and downloaded <a href="https://github.com/ianlancetaylor/libbacktrace" target="_top">libbacktrace sources</a>
         into C:\libbacktrace-master
       </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">

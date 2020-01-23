@@ -226,6 +226,7 @@
     <span class="keyword">inline</span> <span class="keyword">void</span> <span class="identifier">assertion_failed_msg</span><span class="special">(</span><span class="keyword">char</span> <span class="keyword">const</span><span class="special">*</span> <span class="identifier">expr</span><span class="special">,</span> <span class="keyword">char</span> <span class="keyword">const</span><span class="special">*</span> <span class="identifier">msg</span><span class="special">,</span> <span class="keyword">char</span> <span class="keyword">const</span><span class="special">*</span> <span class="identifier">function</span><span class="special">,</span> <span class="keyword">char</span> <span class="keyword">const</span><span class="special">*</span> <span class="comment">/*file*/</span><span class="special">,</span> <span class="keyword">long</span> <span class="comment">/*line*/</span><span class="special">)</span> <span class="special">{</span>
         <span class="identifier">std</span><span class="special">::</span><span class="identifier">cerr</span> <span class="special">&lt;&lt;</span> <span class="string">"Expression '"</span> <span class="special">&lt;&lt;</span> <span class="identifier">expr</span> <span class="special">&lt;&lt;</span> <span class="string">"' is false in function '"</span> <span class="special">&lt;&lt;</span> <span class="identifier">function</span> <span class="special">&lt;&lt;</span> <span class="string">"': "</span> <span class="special">&lt;&lt;</span> <span class="special">(</span><span class="identifier">msg</span> <span class="special">?</span> <span class="identifier">msg</span> <span class="special">:</span> <span class="string">"&lt;...&gt;"</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="string">".\n"</span>
             <span class="special">&lt;&lt;</span> <span class="string">"Backtrace:\n"</span> <span class="special">&lt;&lt;</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">::</span><span class="identifier">stacktrace</span><span class="special">()</span> <span class="special">&lt;&lt;</span> <span class="char">'\n'</span><span class="special">;</span>
+
         <span class="identifier">std</span><span class="special">::</span><span class="identifier">abort</span><span class="special">();</span>
     <span class="special">}</span>
 
@@ -267,7 +268,7 @@
 </h3></div></div></div>
 <p>
         You can provide more information along with exception by embedding stacktraces
-        into the exception. There are many ways to do that, here's how to doe that
+        into the exception. There are many ways to do that, here's how to do that
         using Boost.Exception:
       </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
@@ -479,8 +480,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2016-2019 Antony
-      Polukhin<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2016-2020 Antony Polukhin<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

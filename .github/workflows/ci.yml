@@ -100,7 +100,7 @@ jobs:
           TRAVIS_OS_NAME: "linux"
         run: |
           echo '==================================> SETUP'
-          BOOST_CI_ORG=boostorg BOOST_CI_BRANCH=master && wget https://github.com/$BOOST_CI_ORG/boost-ci/archive/$BOOST_CI_BRANCH.tar.gz && tar -xvf $BOOST_CI_BRANCH.tar.gz && mkdir -p .github &&  mv boost-ci-$BOOST_CI_BRANCH .github/boost-ci
+          # BOOST_CI_ORG=boostorg BOOST_CI_BRANCH=master && wget https://github.com/$BOOST_CI_ORG/boost-ci/archive/$BOOST_CI_BRANCH.tar.gz && tar -xvf $BOOST_CI_BRANCH.tar.gz && mkdir -p .github &&  mv boost-ci-$BOOST_CI_BRANCH .github/boost-ci
           echo '==================================> PACKAGES'
           set -ex
           echo "Before package removal or install"
@@ -115,6 +115,7 @@ jobs:
           ls -al /usr/bin/c*
           echo "about to run sudo apt-get purge -y $PACKAGES_TO_REMOVE"
           if [ -n "$PACKAGES_TO_REMOVE" ]; then sudo apt-get purge -y $PACKAGES_TO_REMOVE; fi
+          sudo ln -s /usr/bin/llvm-cov-9 /usr/bin/llvm-cov
           echo "about to run the equivalent of linux-cxx-install.sh"
 
           set -ex
@@ -222,7 +223,7 @@ jobs:
           echo $OTHER_LIBS
           eval "$LCOV --remove $TRAVIS_BUILD_DIR/coverals/coverage.info $OTHER_LIBS -o $TRAVIS_BUILD_DIR/coverals/coverage.info"
           cd $TRAVIS_BUILD_DIR
-          gem install coveralls-lcov
+          sudo gem install coveralls-lcov || echo "ERROR. Failed to install coveralls-lcov"
           coveralls-lcov coverals/coverage.info
 
           fi

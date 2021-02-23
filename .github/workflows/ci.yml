@@ -72,7 +72,7 @@ jobs:
             sources: ""
             llvm_os: "xenial"
             llvm_ver: "8"
-            b2_args: "cxxstd=03,11,14 toolset=clang-8 cxxflags=\"-stdlib=libc++--coverage -DBOOST_TRAVISCI_BUILD\" linkflags=\"-stdlib=libc++--coverage\""
+            b2_args: "cxxstd=03,11,14 toolset=clang-8 cxxflags=\"-stdlib=libc++ --coverage -DBOOST_TRAVISCI_BUILD\" linkflags=\"-stdlib=libc++ --coverage\""
             gcovtool: "gcov_for_clang.sh"
 
     runs-on: ${{ matrix.os }}
